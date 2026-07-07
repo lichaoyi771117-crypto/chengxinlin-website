@@ -1,2 +1,3 @@
 github账号：lichaoyi771117-crypto
-github token通行证：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
+token name:knights2008
+（token已更新，请通过环境变量或安全方式注入，勿在此文件记录）

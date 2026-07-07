@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* === Navy + Copper + Paper (方案2 brochure palette) === */
+
+  /* Brand - Navy (deep authoritative blue) */
+  --color-navy: #1a2a3a;
+  --color-navy-light: #243447;
+  --color-navy-dim: rgba(26, 42, 58, 0.06);
+
+  /* Brand - Copper (warm luxury accent) */
+  --color-copper: #c8963e;
+  --color-copper-light: #d4a854;
+  --color-copper-dim: rgba(200, 150, 62, 0.15);
+  --color-copper-glow: rgba(200, 150, 62, 0.08);
+
+  /* Surfaces */
+  --color-paper: #f7f4ef;
+  --color-paper-dark: #e8e3da;
+  --color-white: #fefefe;
+
+  /* Text — dark enough to read */
+  --color-slate: #3a4a5a;
+
+  /* Semantic */
+  --color-success: #00C853;
+  --color-warning: #FF9100;
+  --color-error: #FF1744;
+
+  /* Fonts */
+  --font-serif: 'Noto Serif SC', 'SimSun', 'STSong', serif;
+  --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  /* Easing */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+body {
+  background: #e8e3db;
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-copper);
+  color: var(--color-navy);
+}
