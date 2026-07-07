@@ -1,188 +1,216 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
-import { Card } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
-import Link from 'next/link'
-import { isLoggedIn } from '@/lib/auth'
+import { useState, useEffect } from 'react'
+import { motion } from 'motion/react'
+import { Article, CalendarDots, ArrowRight, ArrowLeft } from '@phosphor-icons/react'
+
+const easeOutExpo = [0.16, 1, 0.3, 1] as [number, number, number, number]
+
+interface WeChatArticle {
+  title: string
+  digest: string
+  url: string
+  thumb_url: string
+  create_time: number
+  article_id: string
+}
 
 export default function InsightsPage() {
-  const [articles, setArticles] = useState([])
+  const [articles, setArticles] = useState<WeChatArticle[]>([])
   const [loading, setLoading] = useState(true)
-  const [loggedIn, setLoggedIn] = useState(false)
-  const mountedRef = useRef(true)
-
-  const videoCategories = [
-    { name: '融资知识', count: 12 },
-    { name: '合同审查', count: 8 },
-    { name: '财务分析', count: 6 },
-    { name: '行业资讯', count: 15 },
-  ]
+  const [error, setError] = useState('')
+  const [page, setPage] = useState(0)
+  const [total, setTotal] = useState(0)
+  const pageSize = 20
 
   useEffect(() => {
-    mountedRef.current = true
-    setLoggedIn(isLoggedIn())
-    fetch('/api/articles')
-      .then(res => res.json())
-      .then(data => {
-        if (mountedRef.current) {
+    setLoading(true)
+    setError('')
+    fetch(`/api/wechat/articles?offset=${page * pageSize}&count=${pageSize}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.success) {
           setArticles(data.articles || [])
-          setLoading(false)
+          setTotal(data.total_count || 0)
+        } else {
+          setError(data.error || '加载失败')
         }
       })
-      .catch(() => {
-        if (mountedRef.current) {
-          setArticles([])
-          setLoading(false)
-        }
-      })
-
-    return () => {
-      mountedRef.current = false
-    }
-  }, [])
+      .catch(() => setError('网络错误'))
+      .finally(() => setLoading(false))
+  }, [page])
 
   return (
-    <div className="py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 relative">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">行业洞察</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            深度分析 · 专业见解 · 助您决策
-          </p>
+    <div className="pt-28 pb-16 min-h-screen bg-paper">
+      <div className="max-w-[860px] mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: easeOutExpo }}
+          className="text-center mb-16"
+        >
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.1 }}
+            className="text-xs font-medium tracking-[0.22em] uppercase text-copper mb-4"
+          >
+            行业洞察
+          </motion.p>
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.15 }}
+            className="font-serif text-3xl md:text-4xl font-bold text-navy mb-4"
+          >
+            行业洞察
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.25 }}
+            className="text-base text-navy max-w-[560px] mx-auto leading-relaxed"
+          >
+            来自「程信霖融途」微信公众号的专业内容
+          </motion.p>
+        </motion.div>
 
-          {/* 管理员编辑按钮 */}
-          {loggedIn && (
-            <div className="absolute right-0 top-1/2 -translate-y-1/2">
-              <Link href="/admin/articles">
-                <Button variant="copper" size="sm">
-                  📝 管理文章
-                </Button>
-              </Link>
-            </div>
-          )}
-        </div>
-
-        <div className="grid lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-900">最新文章</h2>
-              {loggedIn && (
-                <Link href="/admin/articles">
-                  <span className="text-sm text-blue-600 hover:text-blue-800 cursor-pointer">
-                    + 发布新文章
-                  </span>
-                </Link>
-              )}
-            </div>
-
-            {loading ? (
-              <Card>
-                <p className="text-center py-8 text-gray-500">加载中...</p>
-              </Card>
-            ) : articles.length === 0 ? (
-              <Card>
-                <div className="text-center py-12">
-                  <p className="text-gray-500 mb-4">暂无文章</p>
-                  {loggedIn ? (
-                    <Link href="/admin/articles">
-                      <Button>发布第一篇文章</Button>
-                    </Link>
-                  ) : (
-                    <p className="text-sm text-gray-400">敬请期待</p>
-                  )}
-                </div>
-              </Card>
-            ) : (
-              <div className="space-y-6">
-                {articles.map((article: any) => (
-                  <Link key={article.slug} href={`/insights/${article.slug}`}>
-                    <Card className="cursor-pointer hover:shadow-xl">
-                      <div className="flex items-start gap-4">
-                        {article.coverImage && (
-                          <div className="w-28 h-20 flex-shrink-0 rounded-lg overflow-hidden">
-                            <img src={article.coverImage} alt="" className="w-full h-full object-cover" />
-                          </div>
-                        )}
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-2">
-                            <span className="px-2 py-1 bg-blue-100 text-blue-700 text-xs rounded">
-                              {article.category}
-                            </span>
-                            <span className="text-gray-400 text-sm">{article.date}</span>
-                            <span className="text-gray-400 text-sm">· {article.readTime}</span>
-                          </div>
-                          <h3 className="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600">
-                            {article.title}
-                          </h3>
-                          <p className="text-gray-600 text-sm">{article.excerpt}</p>
-                        </div>
-                        {!article.coverImage && (
-                          <div className="w-24 h-24 bg-gradient-to-br from-blue-100 to-blue-200 rounded-lg flex-shrink-0 flex items-center justify-center">
-                            <span className="text-3xl">📄</span>
-                          </div>
-                        )}
-                      </div>
-                    </Card>
-                  </Link>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Sidebar */}
+        {/* Article list */}
+        {loading ? (
           <div className="space-y-6">
-            {/* Categories */}
-            <Card>
-              <h3 className="font-bold text-gray-900 mb-4">内容分类</h3>
-              <div className="space-y-2">
-                {videoCategories.map((cat) => (
-                  <div key={cat.name} className="flex items-center justify-between py-2 border-b border-gray-100 last:border-0">
-                    <span className="text-gray-700">{cat.name}</span>
-                    <span className="text-gray-400 text-sm">{cat.count}篇</span>
-                  </div>
-                ))}
-              </div>
-            </Card>
-
-            {/* Videos */}
-            <Card>
-              <h3 className="font-bold text-gray-900 mb-4">短视频精选</h3>
-              <Link href="/videos" className="block text-center py-4 text-blue-600 hover:text-blue-800 text-sm font-medium">
-                查看全部视频 →
-              </Link>
-            </Card>
-
-            {/* Tags */}
-            <Card>
-              <h3 className="font-bold text-gray-900 mb-4">热门标签</h3>
-              <div className="flex flex-wrap gap-2">
-                {['融资', '贷款', '征信', '合同', '财务', '小微企业', '银行', 'AI'].map((tag) => (
-                  <span key={tag} className="px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full hover:bg-blue-100 hover:text-blue-700 cursor-pointer transition-colors">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </Card>
-
-            {/* Follow Us */}
-            <Card className="bg-gradient-to-r from-blue-900 to-blue-700 text-white">
-              <h3 className="font-bold mb-3">关注我们</h3>
-              <p className="text-blue-100 text-sm mb-4">获取最新融资资讯和AI产品动态</p>
-              <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm">
-                  <span>💬</span>
-                  <span>微信公众号：程信霖融途</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <span>🎵</span>
-                  <span>抖音：[待补充]</span>
+            {[...Array(5)].map((_, i) => (
+              <div key={i} className="animate-pulse flex gap-5 p-6 bg-white border border-navy/[0.06]">
+                <div className="w-28 h-28 bg-navy/[0.06] shrink-0" />
+                <div className="flex-1 space-y-3">
+                  <div className="h-5 bg-navy/[0.06] rounded w-3/4" />
+                  <div className="h-3 bg-navy/[0.04] rounded w-1/4" />
+                  <div className="h-4 bg-navy/[0.04] rounded w-full" />
+                  <div className="h-4 bg-navy/[0.04] rounded w-2/3" />
                 </div>
               </div>
-            </Card>
+            ))}
           </div>
-        </div>
+        ) : error ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-24"
+          >
+            <Article weight="thin" className="w-16 h-16 text-slate-light mx-auto mb-4" />
+            <p className="text-navy font-normal mb-2">暂时无法获取文章列表</p>
+            <p className="text-sm text-slate-light">{error}</p>
+          </motion.div>
+        ) : articles.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-24"
+          >
+            <Article weight="thin" className="w-16 h-16 text-slate-light mx-auto mb-4" />
+            <p className="text-navy font-normal">暂无文章</p>
+            <p className="text-sm text-slate-light mt-1">关注「程信霖融途」微信公众号获取最新内容</p>
+          </motion.div>
+        ) : (
+          <div className="space-y-6">
+            {articles.map((article, i) => (
+              <motion.article
+                key={article.article_id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: easeOutExpo, delay: i * 0.06 }}
+              >
+                <a
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex gap-5 p-6 bg-white border border-navy/[0.06] hover:border-copper/30 transition-all duration-500"
+                >
+                  {/* Thumbnail */}
+                  <div className="w-28 h-28 shrink-0 overflow-hidden bg-navy/[0.03]">
+                    {article.thumb_url ? (
+                      <img
+                        src={article.thumb_url.replace('http://', 'https://')}
+                        alt=""
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).style.display = 'none'
+                        }}
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center">
+                        <Article weight="thin" className="w-8 h-8 text-slate-light/40" />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Info */}
+                  <div className="flex-1 min-w-0">
+                    <h2 className="font-serif text-lg font-bold text-navy group-hover:text-copper transition-colors duration-300 line-clamp-2">
+                      {article.title}
+                    </h2>
+                    <p className="flex items-center gap-1.5 text-xs text-slate-light mt-2">
+                      <CalendarDots weight="bold" className="w-3.5 h-3.5" />
+                      {new Date(article.create_time * 1000).toLocaleDateString('zh-CN', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      })}
+                    </p>
+                    {article.digest && (
+                      <p className="text-sm text-navy leading-relaxed mt-2 line-clamp-2">
+                        {article.digest}
+                      </p>
+                    )}
+                  </div>
+                </a>
+              </motion.article>
+            ))}
+          </div>
+        )}
+
+        {/* Pagination */}
+        {total > pageSize && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4 }}
+            className="flex justify-center items-center gap-4 mt-12"
+          >
+            <button
+              onClick={() => setPage((p) => Math.max(0, p - 1))}
+              disabled={page === 0}
+              className="flex items-center gap-1.5 px-4 py-2 text-xs text-navy border border-navy/[0.12] disabled:opacity-30 hover:border-copper/40 transition-all"
+            >
+              <ArrowLeft weight="bold" className="w-3.5 h-3.5" />
+              上一页
+            </button>
+            <span className="text-xs text-slate-light">
+              {page + 1} / {Math.ceil(total / pageSize)}
+            </span>
+            <button
+              onClick={() => setPage((p) => p + 1)}
+              disabled={(page + 1) * pageSize >= total}
+              className="flex items-center gap-1.5 px-4 py-2 text-xs text-navy border border-navy/[0.12] disabled:opacity-30 hover:border-copper/40 transition-all"
+            >
+              下一页
+              <ArrowRight weight="bold" className="w-3.5 h-3.5" />
+            </button>
+          </motion.div>
+        )}
+
+        {/* Follow CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.5 }}
+          className="text-center mt-16 pt-12 border-t border-navy/[0.06]"
+        >
+          <p className="text-sm text-navy font-normal">
+            关注微信公众号 <strong className="text-copper font-medium">「程信霖融途」</strong>
+            ，获取最新行业洞察与专业分析
+          </p>
+        </motion.div>
       </div>
     </div>
   )

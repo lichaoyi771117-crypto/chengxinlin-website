@@ -148,6 +148,7 @@ export function Header() {
           <div className="flex items-center justify-center gap-2 sm:gap-4 lg:gap-8 h-14">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-2 shrink-0 mr-2">
+              <img src="/logo.jpg" alt="程信霖" className="w-7 h-7 rounded-full object-cover" />
               <span className="text-copper font-serif text-lg font-bold tracking-wider">程信霖</span>
             </Link>
 
@@ -307,6 +308,7 @@ export function Header() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="text-center mb-6">
+                <img src="/logo.jpg" alt="程信霖" className="w-12 h-12 rounded-full object-cover mx-auto mb-3" />
                 <span className="text-3xl font-serif font-bold text-navy">程信霖</span>
                 <p className="text-xs text-slate-light mt-1 tracking-wider">云南程信霖信息咨询有限公司</p>
               </div>

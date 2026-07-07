@@ -157,11 +157,9 @@ export default function ContactPage() {
 
             <Card>
               <h2 className="text-xl font-bold text-navy mb-6">关注我们</h2>
-              <div className="flex items-start gap-4">
-                <div className="w-10 h-10 rounded-full bg-copper/[0.08] flex items-center justify-center shrink-0">
-                  <WechatLogo weight="bold" className="w-5 h-5 text-copper" />
-                </div>
-                <div>
+              <div className="flex flex-col items-center gap-4">
+                <img src="/logo.jpg" alt="程信霖融途" className="w-24 h-24 rounded object-cover" />
+                <div className="text-center">
                   <h3 className="font-bold text-navy text-sm mb-1">微信公众号</h3>
                   <p className="text-sm text-copper">程信霖融途</p>
                 </div>

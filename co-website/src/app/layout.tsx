@@ -23,6 +23,10 @@ const notoSerif = Noto_Serif_SC({
 export const metadata: Metadata = {
   title: '程信霖咨询 | 帮小微企业看清问题，找到出路',
   description: 'AI商业决策产品矩阵：融资诊断、财务优化、合同审查、债务协商。云南程信霖信息咨询有限公司。',
+  icons: {
+    icon: '/logo.jpg',
+    apple: '/logo.jpg',
+  },
 }
 
 export default function RootLayout({

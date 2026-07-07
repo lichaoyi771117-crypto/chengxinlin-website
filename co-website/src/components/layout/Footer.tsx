@@ -27,7 +27,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="md:col-span-1">
-            <span className="text-lg font-serif font-bold text-copper tracking-wider">程信霖</span>
+            <div className="flex items-center gap-2">
+              <img src="/logo.jpg" alt="程信霖" className="w-8 h-8 rounded-full object-cover" />
+              <span className="text-lg font-serif font-bold text-copper tracking-wider">程信霖</span>
+            </div>
             <p className="text-paper/40 text-xs leading-relaxed mt-3 tracking-wider">
               帮小微企业看清问题
               <br />

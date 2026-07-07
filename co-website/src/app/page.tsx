@@ -181,6 +181,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.7 }}
           >
+            <img src="/logo.jpg" alt="程信霖" className="w-10 h-10 rounded-full object-cover mx-auto mb-3" />
             <p className="font-serif text-xl font-semibold tracking-[0.06em] mb-1">云南程信霖信息咨询有限公司</p>
             <p className="text-xs font-normal tracking-[0.14em] text-paper/40">财务咨询 & 融资顾问 & AI商业决策</p>
           </motion.div>
@@ -571,6 +572,7 @@ export default function Home() {
           >
             <h3 className="font-serif text-xl font-bold mb-2">云南程信霖信息咨询有限公司</h3>
             <p className="text-xs text-paper/50 mb-8 tracking-[0.06em]">财务咨询 & 融资顾问 & AI商业决策</p>
+            <img src="/logo.jpg" alt="程信霖融途" className="w-14 h-14 rounded-full object-cover mx-auto mb-6" />
             {[
               ['联系人：', '余磊'],
               ['电话：', '13987671259'],

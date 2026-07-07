@@ -1,4 +1,4 @@
-const { servicesConfig } = require('./src/lib/services-config')
+const { servicesConfig } = require('./lib/services-config')
 
 const services = servicesConfig.map((svc: { name: string; port: number; exe: string; args: string[]; workDir: string; env?: Record<string, string> }) => ({
   name: svc.name,
