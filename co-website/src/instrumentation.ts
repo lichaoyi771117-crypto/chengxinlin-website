@@ -1,36 +1,19 @@
-const services = [
-  {
-    name: 'qiaoxi',
-    port: 8501,
-    exe: 'D:\\Ai RAG\\Qiaoxi\\venv312\\Scripts\\streamlit.exe',
-    args: ['run', 'app.py', '--server.port', '8501', '--server.headless', 'true'],
-    workDir: 'D:\\Ai RAG\\Qiaoxi',
-    env: {} as Record<string, string>,
-  },
-  {
-    name: 'qiaoyuan',
-    port: 8502,
-    exe: 'D:\\Ai RAG\\Qiaoyuan\\venv312\\Scripts\\streamlit.exe',
-    args: ['run', 'app.py', '--server.port', '8502', '--server.headless', 'true'],
-    workDir: 'D:\\Ai RAG\\Qiaoyuan',
-    env: {} as Record<string, string>,
-  },
-  {
-    name: 'cxr',
-    port: 8080,
-    exe: 'D:\\Ai RAG\\chengxiaorong\\venv312\\Scripts\\python.exe',
-    args: ['main.py'],
-    workDir: 'D:\\Ai RAG\\chengxiaorong',
-    env: { PORT: '8080' } as Record<string, string>,
-  },
-]
+const { servicesConfig } = require('./src/lib/services-config')
+
+const services = servicesConfig.map((svc: { name: string; port: number; exe: string; args: string[]; workDir: string; env?: Record<string, string> }) => ({
+  name: svc.name,
+  port: svc.port,
+  exe: svc.exe,
+  args: svc.args,
+  workDir: svc.workDir,
+  env: svc.env ?? {},
+}))
 
 export async function register() {
   if (process.env.NEXT_RUNTIME !== 'nodejs') return
   if ((globalThis as Record<string, unknown>).__servicesStarted) return
   ;(globalThis as Record<string, unknown>).__servicesStarted = true
 
-  // Dynamic require keeps child_process out of the Edge bundler
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const { spawn } = require('child_process') as typeof import('child_process')
   // eslint-disable-next-line @typescript-eslint/no-require-imports
@@ -54,7 +37,7 @@ export async function register() {
       continue
     }
     const child = spawn(svc.exe, svc.args, {
-      cwd: svc.workDir,
+      cwd: svc.workDir || undefined,
       detached: true,
       stdio: 'ignore',
       windowsHide: true,

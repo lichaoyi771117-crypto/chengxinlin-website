@@ -1,40 +1,7 @@
 import { NextResponse } from 'next/server'
 import { spawn, type ChildProcess } from 'child_process'
 import net from 'net'
-
-interface ServiceConfig {
-  name: string
-  port: number
-  exe: string
-  args: string[]
-  workDir: string
-  env?: Record<string, string>
-}
-
-const services: ServiceConfig[] = [
-  {
-    name: 'qiaoxi',
-    port: 8501,
-    exe: 'D:\\Ai RAG\\Qiaoxi\\venv312\\Scripts\\streamlit.exe',
-    args: ['run', 'app.py', '--server.port', '8501', '--server.headless', 'true'],
-    workDir: 'D:\\Ai RAG\\Qiaoxi',
-  },
-  {
-    name: 'qiaoyuan',
-    port: 8502,
-    exe: 'D:\\Ai RAG\\Qiaoyuan\\venv312\\Scripts\\streamlit.exe',
-    args: ['run', 'app.py', '--server.port', '8502', '--server.headless', 'true'],
-    workDir: 'D:\\Ai RAG\\Qiaoyuan',
-  },
-  {
-    name: 'cxr',
-    port: 8080,
-    exe: 'D:\\Ai RAG\\chengxiaorong\\venv312\\Scripts\\python.exe',
-    args: ['main.py'],
-    workDir: 'D:\\Ai RAG\\chengxiaorong',
-    env: { PORT: '8080' },
-  },
-]
+import { servicesConfig } from '@/lib/services-config'
 
 // Track running processes to avoid duplicates
 const runningProcesses = new Map<string, ChildProcess>()
@@ -50,16 +17,15 @@ function checkPort(port: number): Promise<boolean> {
   })
 }
 
-function startServiceAsync(config: ServiceConfig): void {
-  // Skip if already starting
+function startServiceAsync(config: typeof servicesConfig[0]): void {
   if (runningProcesses.has(config.name)) {
     const existing = runningProcesses.get(config.name)!
-    if (existing.exitCode === null) return // still running
+    if (existing.exitCode === null) return
     runningProcesses.delete(config.name)
   }
 
   const child = spawn(config.exe, config.args, {
-    cwd: config.workDir,
+    cwd: config.workDir || undefined,
     detached: true,
     stdio: 'ignore',
     windowsHide: true,
@@ -81,12 +47,11 @@ function startServiceAsync(config: ServiceConfig): void {
 export async function GET() {
   const results: Array<{ name: string; port: number; status: string }> = []
 
-  for (const svc of services) {
+  for (const svc of servicesConfig) {
     const running = await checkPort(svc.port)
     if (running) {
       results.push({ name: svc.name, port: svc.port, status: 'running' })
     } else {
-      // Fire-and-forget: start in background, don't wait
       startServiceAsync(svc)
       results.push({ name: svc.name, port: svc.port, status: 'starting' })
     }
