@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>程信霖信息咨询 · 企业宣传手册（方案2 · 全文版）</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #1a2a3a;
+    --navy-light: #243447;
+    --copper: #c8963e;
+    --copper-light: #d4a854;
+    --copper-dim: rgba(200,150,62,0.15);
+    --slate: #4a5568;
+    --slate-light: #718096;
+    --paper: #f7f4ef;
+    --paper-dark: #e8e3da;
+    --white: #fefefe;
+    --font-serif: 'Noto Serif SC', 'SimSun', 'STSong', serif;
+    --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  }
+
+  html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-sans);
+    background: #e8e3db;
+    color: var(--navy);
+    line-height: 1.75;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(26,42,58,0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,150,62,0.18);
+    padding: 0.6rem 2rem;
+    display: flex; align-items: center; justify-content: center; gap: 2.5rem;
+    font-size: 0.75rem; font-weight: 400; letter-spacing: 0.06em;
+  }
+  nav a { color: rgba(247,244,239,0.65); text-decoration: none; transition: color 0.3s; }
+  nav a:hover { color: var(--copper); }
+
+  /* ---- HERO ---- */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    color: var(--paper);
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; position: relative; overflow: hidden;
+    padding: 6rem 2rem 4rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse at 25% 15%, rgba(200,150,62,0.14) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 85%, rgba(200,150,62,0.08) 0%, transparent 45%);
+  }
+  .hero-mark {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: 360px; height: 360px; opacity: 0.05; pointer-events: none;
+  }
+  .hero-mark svg { width: 100%; height: 100%; }
+  .hero-content { position: relative; z-index: 1; max-width: 560px; }
+  .hero-eyebrow {
+    font-size: 0.78rem; font-weight: 400; letter-spacing: 0.32em;
+    text-transform: uppercase; color: var(--copper); margin-bottom: 3rem;
+  }
+  .hero h1 {
+    font-family: var(--font-serif); font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 900;
+    line-height: 1.22; letter-spacing: 0.04em; margin-bottom: 2rem; color: var(--white);
+  }
+  .hero h1 .accent { color: var(--copper); }
+  .hero-divider { width: 60px; height: 1px; background: var(--copper); margin: 0 auto 2.5rem; opacity: 0.6; }
+  .hero-sub {
+    font-size: 1.05rem; font-weight: 300; line-height: 1.9; color: rgba(247,244,239,0.7); margin-bottom: 4rem;
+  }
+  .hero-company {
+    font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600;
+    letter-spacing: 0.06em; margin-bottom: 0.3rem;
+  }
+  .hero-tagline {
+    font-size: 0.72rem; font-weight: 300; letter-spacing: 0.14em; color: rgba(247,244,239,0.4);
+  }
+
+  /* ---- SECTIONS ---- */
+  section {
+    padding: 7rem 2rem;
+    position: relative;
+  }
+  section.light { background: var(--white); }
+  section.warm { background: var(--paper); }
+  section.dark { background: var(--navy); color: var(--paper); }
+
+  .section-inner {
+    max-width: 800px; margin: 0 auto;
+  }
+
+  .sec-eyebrow {
+    font-size: 0.7rem; font-weight: 500; letter-spacing: 0.22em;
+    text-transform: uppercase; color: var(--copper); margin-bottom: 0.8rem;
+  }
+  .sec-title {
+    font-family: var(--font-serif); font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 700;
+    line-height: 1.35; letter-spacing: 0.03em; margin-bottom: 1rem;
+  }
+  section.dark .sec-title { color: var(--paper); }
+  .sec-lead {
+    font-size: 1rem; font-weight: 300; line-height: 1.9; color: var(--slate);
+    max-width: 600px; margin-bottom: 2.5rem;
+  }
+  section.dark .sec-lead { color: rgba(247,244,239,0.6); }
+
+  /* ---- ABOUT ---- */
+  .body-text {
+    font-size: 0.95rem; font-weight: 300; line-height: 2.1; color: var(--slate); margin-bottom: 1.6rem;
+  }
+  .body-text strong { font-weight: 500; color: var(--navy); }
+
+  .pain-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.4rem 2rem; max-width: 600px; margin: 2rem 0 2.2rem;
+  }
+  .pain-item {
+    font-size: 0.88rem; font-weight: 300; color: var(--slate); line-height: 1.7;
+    padding: 0.35rem 0; border-bottom: 1px solid rgba(26,42,58,0.05);
+  }
+
+  .standout {
+    background: linear-gradient(135deg, rgba(26,42,58,0.04), rgba(200,150,62,0.08));
+    border-left: 3px solid var(--copper); padding: 1.6rem 1.8rem;
+    margin: 2.2rem 0 2.5rem;
+    font-family: var(--font-serif); font-size: 1.12rem; font-weight: 600;
+    line-height: 1.8; color: var(--navy);
+  }
+
+  .stat-row-wide {
+    display: flex; gap: 3rem; margin: 2.5rem 0;
+  }
+  .stat-item-wide {
+    border-top: 2px solid var(--copper); padding-top: 0.8rem; min-width: 140px;
+  }
+  .stat-item-wide .number { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 900; line-height: 1; margin-bottom: 0.3rem; }
+  .stat-item-wide .label { font-size: 0.72rem; color: var(--slate-light); letter-spacing: 0.05em; }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 0.7rem; margin-top: 2rem; }
+  .tag {
+    font-size: 0.72rem; font-weight: 500; letter-spacing: 0.06em;
+    padding: 0.5rem 1.1rem; border: 1px solid var(--slate-light); color: var(--slate); border-radius: 2px;
+  }
+  .tag.highlight { border-color: var(--copper); color: var(--copper); }
+
+  /* ---- BUSINESS ---- */
+  .flow-row {
+    display: flex; align-items: center; gap: 0; margin: 2rem 0 3rem; max-width: 640px;
+  }
+  .flow-node {
+    flex: 1; text-align: center; padding: 1.2rem 0.6rem; border-radius: 2px;
+  }
+  .flow-node.alt { background: rgba(26,42,58,0.03); }
+  .flow-node.fill { background: var(--navy); }
+  .flow-node.fill .flow-name { color: var(--paper); }
+  .flow-node.fill .flow-desc { color: rgba(247,244,239,0.6); }
+  .flow-name { font-family: var(--font-serif); font-size: 0.9rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+  .flow-desc { font-size: 0.68rem; color: var(--slate-light); line-height: 1.5; }
+  .flow-arrow { font-size: 1.3rem; color: var(--copper); flex-shrink: 0; padding: 0 0.4rem; }
+
+  table.channels {
+    width: 100%; max-width: 560px; border-collapse: collapse; margin: 1.5rem 0 2.5rem; font-size: 0.84rem;
+  }
+  table.channels th {
+    text-align: left; font-weight: 500; font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate-light); padding: 0.5rem 0; border-bottom: 2px solid var(--navy);
+  }
+  table.channels td {
+    padding: 0.6rem 0; border-bottom: 1px solid rgba(26,42,58,0.06); color: var(--slate); line-height: 1.6;
+  }
+  table.channels td:first-child { font-weight: 500; color: var(--navy); width: 130px; }
+
+  .block { margin-bottom: 2rem; max-width: 640px; }
+  .block-head { display: flex; align-items: baseline; gap: 0.7rem; margin-bottom: 0.6rem; }
+  .block-num { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 900; color: var(--copper); line-height: 1; min-width: 2rem; }
+  .block-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; color: var(--navy); }
+  .block-summary { font-size: 0.85rem; font-weight: 300; color: var(--slate); line-height: 1.85; padding-left: 2.7rem; margin-bottom: 0.5rem; }
+  .block-items { list-style: none; padding-left: 2.7rem; }
+  .block-items li {
+    font-size: 0.82rem; color: var(--slate); line-height: 1.8; padding: 0.15rem 0 0.15rem 1rem;
+    position: relative;
+  }
+  .block-items li::before {
+    content: ''; position: absolute; left: 0; top: 0.7rem;
+    width: 4px; height: 4px; background: var(--copper); border-radius: 50%;
+  }
+
+  /* ---- PRODUCTS ---- */
+  .product-grid-wide {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 3rem;
+  }
+  .pcard {
+    padding: 1.8rem 1.6rem; border: 1px solid rgba(26,42,58,0.07); border-radius: 3px;
+    background: var(--white); transition: none;
+  }
+  .pcard.featured { border-color: var(--copper); background: linear-gradient(135deg, rgba(200,150,62,0.04), rgba(255,255,255,0.8)); }
+  .pcard-name { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 0.2rem; }
+  .pcard-sub { font-size: 0.7rem; color: var(--copper); letter-spacing: 0.07em; margin-bottom: 0.8rem; }
+  .pcard-desc { font-size: 0.8rem; color: var(--slate); line-height: 1.8; font-weight: 300; }
+  .pcard-desc + .pcard-desc { margin-top: 0.6rem; }
+  .pcard-desc strong { font-weight: 500; color: var(--navy); }
+
+  .special-box {
+    padding: 2rem 2rem; border-radius: 3px;
+    background: linear-gradient(135deg, rgba(26,42,58,0.03), rgba(200,150,62,0.05));
+    border-top: 3px solid var(--copper);
+  }
+  .special-box h3 { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.8rem; }
+  .special-box p { font-size: 0.88rem; color: var(--slate); line-height: 1.9; font-weight: 300; margin-bottom: 0.8rem; }
+  .special-box p strong { font-weight: 500; color: var(--navy); }
+  .step-pills { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+  .step-pill {
+    font-size: 0.7rem; font-weight: 500; padding: 0.35rem 0.9rem;
+    border: 1px solid var(--slate-light); color: var(--slate); border-radius: 2px; letter-spacing: 0.05em;
+  }
+
+  /* ---- ADVANTAGES ---- */
+  .advantage-table {
+    width: 100%; border-collapse: collapse; margin-bottom: 3.5rem; font-size: 0.84rem;
+  }
+  .advantage-table th {
+    text-align: left; font-weight: 500; font-size: 0.7rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--slate-light); padding: 0.7rem 0;
+    border-bottom: 2px solid var(--navy);
+  }
+  .advantage-table td {
+    padding: 0.8rem 0; border-bottom: 1px solid rgba(26,42,58,0.06); color: var(--slate); line-height: 1.7;
+    vertical-align: top;
+  }
+  .advantage-table td:first-child { font-weight: 600; color: var(--navy); width: 160px; font-size: 0.85rem; }
+
+  /* ---- CASES ---- */
+  .case-card {
+    padding: 1.6rem 0; border-bottom: 1px solid rgba(26,42,58,0.06);
+  }
+  .case-card:first-of-type { border-top: 1px solid rgba(26,42,58,0.06); }
+  .case-num {
+    font-size: 0.65rem; font-weight: 500; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--copper); margin-bottom: 0.3rem;
+  }
+  .case-heading { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+  .case-text { font-size: 0.84rem; color: var(--slate); line-height: 1.85; font-weight: 300; }
+
+  /* ---- CLOSING ---- */
+  .closing {
+    text-align: center; padding: 4rem 2rem;
+    border-top: 1px solid rgba(26,42,58,0.06);
+  }
+  .closing p {
+    font-family: var(--font-serif); font-size: 1.05rem; font-weight: 400;
+    line-height: 2; color: var(--navy); margin-bottom: 0.8rem; max-width: 600px; margin-left: auto; margin-right: auto;
+  }
+
+  /* ---- CONTACT ---- */
+  .contact-panel {
+    max-width: 500px; margin: 0 auto; padding: 2.5rem 2.5rem;
+    background: var(--navy); color: var(--paper); border-radius: 4px; text-align: center;
+  }
+  .contact-panel h3 { font-family: var(--font-serif); font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .contact-panel .sub { font-size: 0.75rem; color: rgba(247,244,239,0.5); margin-bottom: 2rem; letter-spacing: 0.06em; }
+  .contact-panel .field { font-size: 0.85rem; font-weight: 300; line-height: 2; color: rgba(247,244,239,0.7); }
+  .contact-panel .field strong { font-weight: 500; color: var(--copper-light); }
+
+  /* ---- FOOTER ---- */
+  footer {
+    text-align: center; padding: 3rem 2rem;
+    font-size: 0.7rem; color: var(--slate-light); letter-spacing: 0.06em;
+  }
+
+  @media (max-width: 768px) {
+    nav { gap: 1.2rem; padding: 0.5rem 1rem; font-size: 0.68rem; }
+    .hero { padding: 5rem 1.5rem 3rem; }
+    .pain-grid { grid-template-columns: 1fr; gap: 0; }
+    .product-grid-wide { grid-template-columns: 1fr; }
+    .flow-row { flex-direction: column; gap: 0.5rem; }
+    .flow-arrow { transform: rotate(90deg); }
+    .stat-row-wide { flex-direction: column; gap: 1rem; }
+    section { padding: 4rem 1.5rem; }
+  }
+
+  @media print {
+    body { background: white; }
+    nav { display: none; }
+    section { page-break-inside: avoid; padding: 2rem 1.5rem; }
+    .hero { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .contact-panel, .special-box, .pcard.featured, .standout, .flow-node.fill {
+      -webkit-print-color-adjust: exact; print-color-adjust: exact;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#about">我们是谁</a>
+  <a href="#business">业务架构</a>
+  <a href="#products">AI产品</a>
+  <a href="#cases">案例</a>
+  <a href="#contact">联系方式</a>
+</nav>
+
+<!-- HERO / PAGE 1 -->
+<section class="hero" id="home">
+  <div class="hero-mark">
+    <svg viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="180" cy="180" r="160" stroke="white" stroke-width="0.5" opacity="0.4"/>
+      <circle cx="180" cy="180" r="120" stroke="white" stroke-width="0.5" opacity="0.25"/>
+      <circle cx="180" cy="100" r="5" fill="white" opacity="0.4"/>
+      <line x1="180" y1="180" x2="180" y2="60" stroke="white" stroke-width="0.5" opacity="0.25"/>
+    </svg>
+  </div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">企业宣传手册</div>
+    <h1>帮小微企业<span class="accent">看清问题</span>，找到出路</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">
+      融资诊断 · 财务优化 · 合同审查 · 债务协商 · 商业决策<br>
+      小微企业的事，有人帮你看清、帮你解决。
+    </p>
+    <div class="hero-company">云南程信霖信息咨询有限公司</div>
+    <div class="hero-tagline">财务咨询 &amp; 融资顾问 &amp; AI商业决策</div>
+  </div>
+</section>
+
+<!-- PAGE 2: ABOUT -->
+<section class="light" id="about">
+  <div class="section-inner">
+    <div class="sec-eyebrow">我们是谁</div>
+    <h2 class="sec-title">小微企业的问题，我们自己经历过、看得懂、也解决过</h2>
+
+    <p class="body-text">程信霖不是一家坐在办公室里等客户上门的中介。</p>
+
+    <p class="body-text">
+      我们是从融资服务一线走出来的——经历过政策收紧、银行关闸、客户断贷的完整周期。这段经历让我们看清了一件事：<strong>小微企业面对的问题，从来不只是"能不能贷到钱"。</strong>
+    </p>
+
+    <div class="pain-grid">
+      <div class="pain-item">合同里藏着陷阱，看不出来。</div>
+      <div class="pain-item">征信报告上几条旧记录，就把续贷路堵死了。</div>
+      <div class="pain-item">财务报表一团乱麻，银行连看都不想看。</div>
+      <div class="pain-item">欠了债被催收，不知道怎么跟银行合法协商。</div>
+      <div class="pain-item">想融资，连自己能贷什么、为什么被拒都不清楚。</div>
+    </div>
+
+    <p class="body-text">
+      这些问题，小微企业请不起专职CFO、法务、税务顾问来解决——<strong>全国5200万小微企业，98%没有专业财务和法务团队。</strong>
+    </p>
+
+    <div class="standout">
+      程信霖做的事很简单：帮你看清问题在哪里，然后帮你想办法走出去。
+    </div>
+
+    <p class="body-text">
+      不是卖概念，不是讲玄学——是帮一个铝业企业识别出合同陷阱，帮一个建筑企业修复征信，帮一个物业企业重新定义融资需求，帮一个科技企业把劣势讲成优势。<strong>这些都是已经做过的事。</strong>
+    </p>
+
+    <div class="tags">
+      <span class="tag highlight">专业诊断</span>
+      <span class="tag">AI赋能</span>
+      <span class="tag highlight">合规底线</span>
+      <span class="tag">客户立场</span>
+      <span class="tag highlight">全周期闭环</span>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 3: BUSINESS ARCHITECTURE -->
+<section class="warm" id="business">
+  <div class="section-inner">
+    <div class="sec-eyebrow">业务架构全景</div>
+    <h2 class="sec-title">三大板块，一套闭环——从看懂你到解决问题</h2>
+    <p class="sec-lead">程信霖的业务不是零散的"什么都能做"，而是围绕小微企业需求搭建的完整闭环：<strong>流量获客 → 业务承接 → 服务落地</strong>，每个环节都有明确的产品和交付标准。</p>
+
+    <div class="flow-row">
+      <div class="flow-node alt">
+        <div class="flow-name">前端获客</div>
+        <div class="flow-desc">自媒体引流</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node fill">
+        <div class="flow-name">业务承接</div>
+        <div class="flow-desc">三大核心板块</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node alt">
+        <div class="flow-name">服务落地</div>
+        <div class="flow-desc">标准化交付</div>
+      </div>
+    </div>
+
+    <p style="font-family:var(--font-serif);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:0.8rem;">前端：自媒体引流获客</p>
+    <table class="channels">
+      <thead><tr><th>渠道</th><th>功能</th></tr></thead>
+      <tbody>
+        <tr><td>公众号文章</td><td>专业深度内容，建立品牌信任，工作日日更</td></tr>
+        <tr><td>短视频</td><td>融资政策解读、行业干货，轻量化触达泛用户</td></tr>
+        <tr><td>知识直播</td><td>实时互动答疑，筛选高意向客户</td></tr>
+      </tbody>
+    </table>
+
+    <p style="font-family:var(--font-serif);font-size:1rem;font-weight:600;color:var(--navy);margin:2rem 0 1.5rem;">核心业务：三大板块</p>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num">01</span>
+        <span class="block-name">融资信息撮合</span>
+      </div>
+      <p class="block-summary">不是帮客户"搞到钱"的中介，而是帮客户先看清融资条件、规划融资路径，待条件成熟再对接合规资金渠道。</p>
+      <ul class="block-items">
+        <li>债务协商服务：站在债务人立场，帮企业与银行合法协商展期、减免、分期、重组，并提供信用修复咨询</li>
+        <li>融资规划：根据企业真实财务状况，制定中长期融资方案</li>
+        <li>个人/企业融资撮合：对接合规资金渠道，匹配融资需求</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num">02</span>
+        <span class="block-name">咨询业务</span>
+      </div>
+      <ul class="block-items">
+        <li>标准化工具包服务：融资体检、财务报表分析、商业合同审查——AI工具让每个老板都能用得起专业诊断</li>
+        <li>定制化咨询服务：一对一深度诊断，输出专属解决方案</li>
+      </ul>
+    </div>
+
+    <div class="block">
+      <div class="block-head">
+        <span class="block-num">03</span>
+        <span class="block-name">企业落地服务</span>
+      </div>
+      <ul class="block-items">
+        <li>物业费催收服务：专业团队+标准化流程</li>
+        <li>系统开发服务：数据库+响应链系统，业务线上化</li>
+        <li>软件定制开发：为小微企业量身打造流程管理工具</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 4: AI PRODUCTS -->
+<section class="light" id="products">
+  <div class="section-inner">
+    <div class="sec-eyebrow">AI产品矩阵与特色服务</div>
+    <h2 class="sec-title">四个AI工具，让专业不再贵——加上一项别人没做的服务</h2>
+
+    <div class="product-grid-wide">
+      <div class="pcard featured">
+        <div class="pcard-name">程晓融</div>
+        <div class="pcard-sub">AI融资体检系统</div>
+        <p class="pcard-desc">上传征信报告，系统自动解读：你能贷什么、为什么被拒、怎么改善。基于昆明200+款真实产品库智能匹配，<strong>国内唯一面向借款人端的合规融资体检工具。</strong></p>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-name">峤远</div>
+        <div class="pcard-sub">AI财务报表自动分析系统</div>
+        <p class="pcard-desc">上传Excel报表，一键生成偿债、盈利、营运、现金流、破产预警5模块诊断报告。<strong>国内唯一专为中国中小企业非标报表做AI财务分析的产品。</strong></p>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-name">乔曦</div>
+        <div class="pcard-sub">AI商业合同决策系统</div>
+        <p class="pcard-desc">上传合同，系统直接告诉你"签/改/拖/退"——<strong>国内唯一把决策写进答案的合同审查产品，不是列风险清单让你自己判断。</strong>55,088条法规本地检索，6路独立审计。</p>
+      </div>
+
+      <div class="pcard">
+        <div class="pcard-name">陈曦</div>
+        <div class="pcard-sub">AI公文工作台</div>
+        <p class="pcard-desc">小微企业老板经常遇到一种窘境：需要给税局写个请示，不会写；需要给工商局报个说明，格式不对；需要发个内部通知，连个合格的秘书都没有——只有还在念高中的女儿帮忙打字。</p>
+        <p class="pcard-desc">陈曦就是为这种窘境设计的。与前三个产品不同，陈曦内核是智能Agent：锁定文种、结构铁律、四角色评审（党办/政研/纪检/基层），确保公文合规不踩雷。<strong>22种法定公文全覆盖，GB/T 9704国标排版，连格式都替你搞定。</strong>你只需要说清楚要写什么，剩下的交给陈曦。</p>
+      </div>
+    </div>
+
+    <div class="special-box">
+      <h3>特色服务：债务沟通</h3>
+      <p><strong>全国1.2亿逾期债务人，几乎没有人帮他们合法说话。</strong></p>
+      <p>程信霖的债务沟通产品，不是催收，不是逃债——是站在债务人立场，运用法律+金融+谈判三重专业能力，帮债务人与银行协商展期、减免、分期、重组。</p>
+      <p>四级标准化服务体系：免费咨询→诊断评估→方案制定→全程顾问</p>
+      <p>已接单处理，正在建立专业团队。这条赛道上，几乎没有合规的专业服务机构。</p>
+      <div class="step-pills">
+        <span class="step-pill">免费咨询</span>
+        <span class="step-pill">诊断评估</span>
+        <span class="step-pill">方案制定</span>
+        <span class="step-pill">全程顾问</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 5: ADVANTAGES + CASES -->
+<section class="warm" id="cases">
+  <div class="section-inner">
+    <div class="sec-eyebrow">核心竞争力</div>
+    <h2 class="sec-title">我们做过什么，比我们说什么更重要</h2>
+
+    <table class="advantage-table">
+      <thead>
+        <tr><th>优势</th><th>说明</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>专业诊断能力</td>
+          <td>核心团队10-20年银行及头部金融机构背景，独创7维诊断模型——不是"帮你跑银行"，而是"帮你看清为什么跑不通"</td>
+        </tr>
+        <tr>
+          <td>AI+人双重交付</td>
+          <td>AI工具做标准化诊断，人工顾问做深度方案——低门槛进入，高专业落地</td>
+        </tr>
+        <tr>
+          <td>全周期闭环</td>
+          <td>从诊断→规划→执行→跟踪，每个环节都有交付物和标准，不是单点服务而是完整路径</td>
+        </tr>
+        <tr>
+          <td>客户立场</td>
+          <td>债务沟通帮债务人说话，合同审查帮老板决策，融资规划帮企业看清——我们站在客户这边</td>
+        </tr>
+        <tr>
+          <td>合规底线</td>
+          <td>不包装材料、不伪造流水、不代客投诉——靠专业解决问题，不靠灰色操作</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="sec-eyebrow" style="margin-top:1rem;">服务案例（脱敏）</div>
+
+    <div class="case-card">
+      <div class="case-num">案例 1</div>
+      <div class="case-heading">某铝业加工企业——2小时识别合同陷阱</div>
+      <div class="case-text">客户濒临绝境时签订了一份高风险采购合同。程信霖当天识别异常信号，深度尽调确认对方为空壳公司，紧急发出风险提示并重建交易架构——避免30万定金损失+110万恶意债务陷阱。</div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-num">案例 2</div>
+      <div class="case-heading">某建筑企业——征信修复方案</div>
+      <div class="case-text">企业征信"花了"——历史不良记录已结清但仍在报告中持续展示，导致续贷屡被拒。程信霖设计四阶段修复路线+15份交付文件清单，收费仅为行业竞品的1/3。</div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-num">案例 3</div>
+      <div class="case-heading">某大型物业企业——融资需求重新定义</div>
+      <div class="case-text">企业营收略降、应收高、诉讼多——银行看到的是"经营恶化"。程信霖将这一特征重新定义为"战略转型的正常财务反映"，从银行视角编写融资需求说明，为银企沟通打开通道。</div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-num">案例 4</div>
+      <div class="case-heading">某教育集团——财务结构优化</div>
+      <div class="case-text">教育板块资金被系统性抽离至房地产业务，关联方应收占比97%。程信霖诊断"空心化"趋势，设计合规框架内的报表结构调整方案，将核心业务与高风险关联方风险隔离。</div>
+    </div>
+
+    <div class="case-card">
+      <div class="case-num">案例 5</div>
+      <div class="case-heading">某科技农业企业——劣势转优势</div>
+      <div class="case-text">亏损、高负债、无抵押物——传统融资路全堵死。程信霖将亏损重新定位为"研发投入期"，将高负债解释为"行业垫资模式+政府客户背书"，匹配4条差异化融资路径，首轮目标200-400万。</div>
+    </div>
+
+    <!-- CLOSING -->
+    <div class="closing">
+      <p>小微企业面对的问题从来不是单一的——合同有陷阱、征信有记录、财务有漏洞、债务有压力、融资有障碍。每一个问题背后，都是一家企业在生死线上挣扎。</p>
+      <p>程信霖不卖玄学，不讲概念。我们做的事情很具体：帮你看清问题在哪里，然后帮你想办法走出去。</p>
+      <p><strong>这不是承诺，是已经做过的事。</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- PAGE 6: CONTACT -->
+<section class="dark" id="contact">
+  <div class="section-inner" style="text-align:center;">
+    <div class="sec-eyebrow">联系方式</div>
+
+    <div class="contact-panel">
+      <h3>云南程信霖信息咨询有限公司</h3>
+      <div class="sub">财务咨询 &amp; 融资顾问 &amp; AI商业决策</div>
+      <div class="field"><strong>联系人：</strong>余磊</div>
+      <div class="field"><strong>电话：</strong>13987671259</div>
+      <div class="field"><strong>微信公众号：</strong>程信霖融途</div>
+      <div class="field"><strong>网站：</strong>程信霖官网</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  全文完 · 程信霖信息咨询 · CHENGXINLIN CONSULTING
+</footer>
+
+</body>
+</html>

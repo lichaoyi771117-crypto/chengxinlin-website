@@ -1,0 +1,25 @@
+# Next.js build output
+.next/
+out/
+build/
+
+# Dependencies
+node_modules/
+
+# Binary logs
+*.log
+dev.log
+dev2.log
+
+# Environment files
+.env*
+!.env.example
+
+# TypeScript build info
+*.tsbuildinfo
+next-env.d.ts
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3

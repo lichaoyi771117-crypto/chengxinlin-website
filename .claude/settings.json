@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next *)",
+      "Bash(curl -s http://localhost:3000/)",
+      "Bash(curl -s http://localhost:3000/api/services/health)",
+      "PowerShell($exe = \"D:\\\\Ai RAG\\\\chengxiaorong\\\\venv312\\\\Scripts\\\\python.exe\"; $dir = \"D:\\\\Ai RAG\\\\chengxiaorong\"; $p = Start-Process -FilePath $exe -ArgumentList \"main.py\" -WorkingDirectory $dir -PassThru -NoNewWindow -RedirectStandardOutput \"$env:TEMP\\\\cxr_stdout.txt\" -RedirectStandardError \"$env:TEMP\\\\cxr_stderr.txt\"; Start-Sleep -Seconds 8; if \\(-not $p.HasExited\\) { Write-Host \"Process running PID=$\\($p.Id\\)\" } else { Write-Host \"Process exited code=$\\($p.ExitCode\\)\"; Write-Host \"---STDERR---\"; Get-Content \"$env:TEMP\\\\cxr_stderr.txt\" })",
+      "PowerShell(Start-Process \"http://localhost:3000\")",
+      "PowerShell($html = Invoke-WebRequest -Uri \"http://localhost:3000/products/chengxiaorong\" -UseBasicParsing; $html.Content.Substring\\(0, 300\\))",
+      "Bash(curl -v http://localhost:3000/)",
+      "Bash(curl -s http://localhost:8080/)",
+      "Bash(curl -s http://localhost:8501/)",
+      "Bash(curl -s http://localhost:8502/)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 8080 -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process -Id 23928 -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process -Id 12268 -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Id 12268 -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Write-Host \"Port 3000 cleared\")",
+      "PowerShell(Get-NetTCPConnection -LocalPort 8501,8502,8080 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force -ErrorAction SilentlyContinue }; Write-Host \"Backend ports cleared\")",
+      "PowerShell(Get-NetTCPConnection -LocalPort 3000 -ErrorAction SilentlyContinue | Select-Object LocalPort,OwningProcess, @{N='Process';E={\\(Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue\\).ProcessName}})",
+      "Read(//d/Ai RAG/chengxiaorong/**)"
+    ]
+  }
+}
