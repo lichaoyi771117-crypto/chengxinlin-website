@@ -1,6 +1,13 @@
 import { Card } from '@/components/ui/Card'
 import Link from 'next/link'
 
+const productImages: Record<string, string> = {
+  '/products/qiaoxi': '/images/product-qiaoxi.jpg',
+  '/products/qiaoyuan': '/images/product-qiaoyuan.jpg',
+  '/products/chengxiaorong': '/images/product-chengxiaorong.jpg',
+  '/products/chenxi': '/images/product-chenxi.jpg',
+}
+
 const products = [
   {
     name: '乔曦',
@@ -15,7 +22,6 @@ const products = [
     ],
     price: '¥20/次起',
     href: '/products/qiaoxi',
-    color: 'from-violet-400/70 to-violet-600/60',
   },
   {
     name: '峤远',
@@ -30,7 +36,6 @@ const products = [
     ],
     price: '¥20/次起',
     href: '/products/qiaoyuan',
-    color: 'from-emerald-400/70 to-emerald-600/60',
   },
   {
     name: '程晓融',
@@ -45,45 +50,65 @@ const products = [
     ],
     price: '免费体验',
     href: '/products/chengxiaorong',
-    color: 'from-blue-400/70 to-blue-600/60',
+  },
+  {
+    name: '陈曦',
+    icon: '📝',
+    title: 'AI公文工作台',
+    description: '结构驱动 · 国标排版 · 22种公文文种 · GB/T 9704精准排版',
+    features: [
+      '22种公文文种结构铁律',
+      'GB/T 9704-2012全参数排版',
+      '四级字体回退机制',
+      '2-3轮对话智能起草',
+    ],
+    price: '免费体验',
+    href: '/products/chenxi',
   },
 ]
 
 export default function ProductsPage() {
   return (
-    <div className="pt-24 pb-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-navy mb-4">
-            AI产品矩阵
-          </h1>
-          <p className="text-lg text-navy/70 max-w-3xl mx-auto font-normal">
+    <div className="pb-12">
+      {/* Banner */}
+      <div className="relative h-[320px] overflow-hidden mb-12">
+        <img src="/images/banner-products.jpg" alt="" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-navy/75" />
+        <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
+          <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">AI产品矩阵</h1>
+          <p className="text-lg text-white/80 max-w-3xl mx-auto font-normal">
             三款自研AI商业决策产品，覆盖合同审查、财务分析、融资体检全场景
           </p>
         </div>
+      </div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid md:grid-cols-3 gap-8">
           {products.map((product) => (
             <Link key={product.href} href={product.href}>
-              <Card className="h-full cursor-pointer hover:shadow-xl">
-                <div className={`bg-gradient-to-r ${product.color} text-white p-6 rounded-xl mb-6`}>
-                  <span className="text-3xl">{product.icon}</span>
-                </div>
-                <h2 className="text-2xl font-bold text-navy mb-2">
-                  {product.name} · {product.title}
-                </h2>
-                <p className="text-navy/70 mb-6 font-normal leading-relaxed">{product.description}</p>
-                <ul className="space-y-2 mb-6">
-                  {product.features.map((feature, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm text-navy/70">
-                      <span className="text-copper mt-0.5 font-bold">✓</span>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                <div className="pt-4 border-t border-navy/[0.06] flex items-center justify-between">
-                  <span className="text-copper font-bold text-lg">{product.price}</span>
-                  <span className="text-copper font-medium text-sm">了解详情 →</span>
+              <Card className="h-full cursor-pointer hover:shadow-xl overflow-hidden p-0">
+                <img
+                  src={productImages[product.href]}
+                  alt={product.name}
+                  className="w-full h-44 object-cover"
+                />
+                <div className="p-6">
+                  <h2 className="text-2xl font-bold text-navy mb-2">
+                    {product.name} · {product.title}
+                  </h2>
+                  <p className="text-navy/70 mb-6 font-normal leading-relaxed">{product.description}</p>
+                  <ul className="space-y-2 mb-6">
+                    {product.features.map((feature, i) => (
+                      <li key={i} className="flex items-start gap-2 text-sm text-navy/70">
+                        <span className="text-copper mt-0.5 font-bold">✓</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pt-4 border-t border-navy/[0.06] flex items-center justify-between">
+                    <span className="text-copper font-bold text-lg">{product.price}</span>
+                    <span className="text-copper font-medium text-sm">了解详情 →</span>
+                  </div>
                 </div>
               </Card>
             </Link>

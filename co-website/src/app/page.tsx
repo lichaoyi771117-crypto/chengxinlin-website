@@ -125,18 +125,14 @@ export default function Home() {
     <>
       {/* ===== HERO (page entrance — animate once, no scroll) ===== */}
       <section className="min-h-[100dvh] bg-navy text-paper flex flex-col justify-center items-center text-center relative overflow-hidden pt-14">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-[15%] left-[25%] w-[400px] h-[400px] bg-copper/[0.06] rounded-full blur-[120px]" />
-          <div className="absolute bottom-[15%] right-[25%] w-[350px] h-[350px] bg-copper/[0.04] rounded-full blur-[100px]" />
+        {/* Background image */}
+        <div className="absolute inset-0">
+          <img src="/images/hero-bg.jpg" alt="" className="w-full h-full object-cover opacity-50" />
+          <div className="absolute inset-0 bg-navy/70" />
         </div>
-
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[360px] h-[360px] opacity-[0.04] pointer-events-none">
-          <svg viewBox="0 0 360 360" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="180" cy="180" r="160" stroke="white" strokeWidth="0.5" opacity="0.4"/>
-            <circle cx="180" cy="180" r="120" stroke="white" strokeWidth="0.5" opacity="0.25"/>
-            <circle cx="180" cy="100" r="5" fill="white" opacity="0.4"/>
-            <line x1="180" y1="180" x2="180" y2="60" stroke="white" strokeWidth="0.5" opacity="0.25"/>
-          </svg>
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-[15%] left-[25%] w-[400px] h-[400px] bg-copper/[0.04] rounded-full blur-[120px]" />
+          <div className="absolute bottom-[15%] right-[25%] w-[350px] h-[350px] bg-copper/[0.03] rounded-full blur-[100px]" />
         </div>
 
         <div className="relative z-10 max-w-[560px] mx-auto px-4 py-24">
@@ -222,6 +218,10 @@ export default function Home() {
           <BodyText>
             这些问题，小微企业请不起专职CFO、法务、税务顾问来解决——<strong className="font-medium text-navy">全国5200万小微企业，98%没有专业财务和法务团队。</strong>
           </BodyText>
+
+          <motion.div variants={revealFromBelow} className="my-8">
+            <img src="/images/about-team.jpg" alt="程信霖团队" className="w-full h-auto object-cover" />
+          </motion.div>
 
           <motion.div variants={revealScale}
             className="bg-gradient-to-br from-navy/[0.04] to-copper/[0.08] border-l-[3px] border-copper py-6 px-7 my-8"
@@ -325,16 +325,19 @@ export default function Home() {
                 num: '01', name: '融资信息撮合',
                 summary: '不是帮客户&ldquo;搞到钱&rdquo;的中介，而是帮客户先看清融资条件、规划融资路径，待条件成熟再对接合规资金渠道。',
                 items: ['债务协商服务：站在债务人立场，帮企业与银行合法协商展期、减免、分期、重组，并提供信用修复咨询', '融资规划：根据企业真实财务状况，制定中长期融资方案', '个人/企业融资撮合：对接合规资金渠道，匹配融资需求'],
+                img: '/images/biz-financing.jpg',
               },
               {
                 num: '02', name: '咨询业务',
                 summary: null,
                 items: ['标准化工具包服务：融资体检、财务报表分析、商业合同审查——AI工具让每个老板都能用得起专业诊断', '定制化咨询服务：一对一深度诊断，输出专属解决方案'],
+                img: '/images/biz-consulting.jpg',
               },
               {
                 num: '03', name: '企业落地服务',
                 summary: null,
                 items: ['物业费催收服务：专业团队+标准化流程', '系统开发服务：数据库+响应链系统，业务线上化', '软件定制开发：为小微企业量身打造流程管理工具'],
+                img: '/images/biz-delivery.jpg',
               },
             ].map((block, bi) => (
               <motion.div
@@ -345,6 +348,11 @@ export default function Home() {
                 transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.2 + bi * 0.12 }}
                 className="mb-8 max-w-[640px]"
               >
+                <img
+                  src={block.img}
+                  alt={block.name}
+                  className="w-full h-40 object-cover mb-4 opacity-90"
+                />
                 <div className="flex items-baseline gap-3 mb-2">
                   <motion.span
                     initial={{ opacity: 0, scale: 0.5 }}
@@ -391,10 +399,10 @@ export default function Home() {
             className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12"
           >
             {[
-              { name: '程晓融', sub: 'AI融资体检系统', desc: '上传征信报告，系统自动解读：你能贷什么、为什么被拒、怎么改善。基于昆明200+款真实产品库智能匹配，<strong>国内唯一面向借款人端的合规融资体检工具。</strong>', featured: true },
-              { name: '峤远', sub: 'AI财务报表自动分析系统', desc: '上传Excel报表，一键生成偿债、盈利、营运、现金流、破产预警5模块诊断报告。<strong>国内唯一专为中国中小企业非标报表做AI财务分析的产品。</strong>', featured: false },
-              { name: '乔曦', sub: 'AI商业合同决策系统', desc: '上传合同，系统直接告诉你&ldquo;签/改/拖/退&rdquo;——<strong>国内唯一把决策写进答案的合同审查产品，不是列风险清单让你自己判断。</strong>55,088条法规本地检索，6路独立审计。', featured: false },
-              { name: '陈曦', sub: 'AI公文工作台', desc: '小微企业老板经常遇到一种窘境：需要给税局写个请示，不会写；需要给工商局报个说明，格式不对；需要发个内部通知，连个合格的秘书都没有——只有还在念高中的女儿帮忙打字。陈曦就是为这种窘境设计的。与前三个产品不同，陈曦内核是智能Agent：锁定文种、结构铁律、四角色评审（党办/政研/纪检/基层），确保公文合规不踩雷。<strong>22种法定公文全覆盖，GB/T 9704国标排版，连格式都替你搞定。</strong>你只需要说清楚要写什么，剩下的交给陈曦。', featured: false },
+              { name: '程晓融', sub: 'AI融资体检系统', desc: '上传征信报告，系统自动解读：你能贷什么、为什么被拒、怎么改善。基于昆明200+款真实产品库智能匹配，<strong>国内唯一面向借款人端的合规融资体检工具。</strong>', featured: true, img: '/images/product-chengxiaorong.jpg' },
+              { name: '峤远', sub: 'AI财务报表自动分析系统', desc: '上传Excel报表，一键生成偿债、盈利、营运、现金流、破产预警5模块诊断报告。<strong>国内唯一专为中国中小企业非标报表做AI财务分析的产品。</strong>', featured: false, img: '/images/product-qiaoyuan.jpg' },
+              { name: '乔曦', sub: 'AI商业合同决策系统', desc: '上传合同，系统直接告诉你&ldquo;签/改/拖/退&rdquo;——<strong>国内唯一把决策写进答案的合同审查产品，不是列风险清单让你自己判断。</strong>55,088条法规本地检索，6路独立审计。', featured: false, img: '/images/product-qiaoxi.jpg' },
+              { name: '陈曦', sub: 'AI公文工作台', desc: '小微企业老板经常遇到一种窘境：需要给税局写个请示，不会写；需要给工商局报个说明，格式不对；需要发个内部通知，连个合格的秘书都没有——只有还在念高中的女儿帮忙打字。陈曦就是为这种窘境设计的。与前三个产品不同，陈曦内核是智能Agent：锁定文种、结构铁律、四角色评审（党办/政研/纪检/基层），确保公文合规不踩雷。<strong>22种法定公文全覆盖，GB/T 9704国标排版，连格式都替你搞定。</strong>你只需要说清楚要写什么，剩下的交给陈曦。', featured: false, img: '/images/product-chenxi.jpg' },
             ].map((p, pi) => (
               <motion.div
                 key={p.name}
@@ -403,12 +411,17 @@ export default function Home() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.7, ease: easeOutExpo, delay: 0.2 + pi * 0.1 }}
                 whileHover={{ y: -4, transition: { duration: 0.3 } }}
-                className={`p-7 border cursor-default ${
+                className={`p-7 border cursor-default overflow-hidden ${
                   p.featured
                     ? 'border-copper bg-gradient-to-br from-copper/[0.04] to-white/80'
                     : 'border-navy/[0.07] bg-white'
                 }`}
               >
+                <img
+                  src={p.img}
+                  alt={p.name}
+                  className="w-full h-36 object-cover -mx-7 -mt-7 mb-5"
+                />
                 <h3 className="font-serif text-xl font-bold text-navy mb-1">{p.name}</h3>
                 <p className="text-xs text-copper tracking-[0.07em] mb-3">{p.sub}</p>
                 <div className="text-sm text-navy leading-[1.8] font-normal [&>strong]:font-medium [&>strong]:text-navy" dangerouslySetInnerHTML={{ __html: p.desc }} />
@@ -420,6 +433,11 @@ export default function Home() {
           <motion.div variants={revealScale}
             className="p-8 bg-gradient-to-br from-navy/[0.03] to-copper/[0.05] border-t-[3px] border-copper"
           >
+            <img
+              src="/images/service-debt.jpg"
+              alt="债务沟通"
+              className="w-full h-44 object-cover -mx-8 -mt-8 mb-6"
+            />
             <h3 className="font-serif text-lg font-bold text-navy mb-3">特色服务：债务沟通</h3>
             <p className="text-sm text-navy leading-[1.9] font-normal mb-3">
               <strong className="font-medium text-navy">全国1.2亿逾期债务人，几乎没有人帮他们合法说话。</strong>

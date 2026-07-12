@@ -54,16 +54,23 @@ export default function AboutPage() {
     <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Hero */}
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">关于我们</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            企业融资生态构建者，专业重塑资本价值
-          </p>
+        <div className="text-center mb-16 relative -mx-4 sm:-mx-6 lg:-mx-8 -mt-12">
+          <div className="relative h-[300px] overflow-hidden">
+            <img src="/images/banner-about.jpg" alt="" className="w-full h-full object-cover" />
+            <div className="absolute inset-0 bg-navy/70" />
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+              <h1 className="text-4xl md:text-5xl font-bold mb-4">关于我们</h1>
+              <p className="text-xl opacity-80 max-w-3xl">
+                企业融资生态构建者，专业重塑资本价值
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Company Introduction */}
         <section className="mb-16">
           <Card>
+            <img src="/images/about-office.jpg" alt="程信霖办公室" className="w-full h-56 object-cover -mx-0 -mt-0 mb-6 rounded-t-xl" />
             <h2 className="text-2xl font-bold text-gray-900 mb-6">公司简介</h2>
             <div className="prose max-w-none text-gray-600 space-y-4">
               <p>
@@ -73,7 +80,7 @@ export default function AboutPage() {
                 公司业务以"流量获客—业务承接—服务落地"为核心逻辑，构建了从客户触达、需求响应到企业级服务交付的完整闭环，业务覆盖个人债务优化、融资咨询及企业落地服务三大板块，形成多渠道引流、多产品矩阵、标准化交付的经营模式。
               </p>
             </div>
-          </Card>
+            </Card>
         </section>
 
         {/* Business Architecture */}
@@ -198,10 +205,8 @@ export default function AboutPage() {
         <section>
           <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">核心团队</h2>
           <div className="max-w-3xl mx-auto">
-            <Card className="text-center">
-              <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-blue-400 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-white text-4xl font-bold">程</span>
-              </div>
+            <Card className="text-center overflow-hidden">
+              <img src="/images/about-core-team.jpg" alt="程信霖核心团队" className="w-full h-48 object-cover -mx-0 -mt-0 mb-6" />
               <h3 className="text-xl font-bold text-gray-900 mb-2">程信霖核心团队</h3>
               <p className="text-gray-600 mb-4">10-20年银行及头部金融机构从业背景</p>
               <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-500">

@@ -58,11 +58,16 @@ export default function PartnersPage() {
   return (
     <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">合作伙伴</h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            携手共建企业融资生态，实现互利共赢
-          </p>
+        {/* Banner */}
+        <div className="relative h-[280px] overflow-hidden -mt-12 -mx-4 sm:-mx-6 lg:-mx-8 mb-16">
+          <img src="/images/banner-partners.jpg" alt="" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-navy/75" />
+          <div className="absolute inset-0 flex flex-col items-center justify-center text-white">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">合作伙伴</h1>
+            <p className="text-xl opacity-80 max-w-3xl mx-auto">
+              携手共建企业融资生态，实现互利共赢
+            </p>
+          </div>
         </div>
 
         {/* Cooperation Modes */}
@@ -139,8 +144,9 @@ export default function PartnersPage() {
 
         {/* Partner Benefits */}
         <section className="mb-16">
-          <Card className="bg-gradient-to-r from-blue-900 to-blue-700 text-white">
-            <div className="text-center">
+          <Card className="bg-gradient-to-r from-navy to-navy/90 text-white overflow-hidden p-0">
+            <img src="/images/partners-collaboration.jpg" alt="合作共赢" className="w-full h-48 object-cover opacity-60" />
+            <div className="text-center p-8 -mt-8 relative z-10">
               <h2 className="text-2xl font-bold mb-4">为什么选择成为程信霖合作伙伴？</h2>
               <div className="grid md:grid-cols-3 gap-6 mt-8">
                 <div>

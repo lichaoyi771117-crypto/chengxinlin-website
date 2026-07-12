@@ -27,6 +27,13 @@ export const servicesConfig: ServiceConfig[] = [
     workDir: getEnv('QIAOYUAN_WORK_DIR', ''),
   },
   {
+    name: 'chenxi',
+    port: 8503,
+    exe: getEnv('CHENXI_EXE', 'streamlit'),
+    args: ['run', 'app.py', '--server.port', '8503', '--server.headless', 'true'],
+    workDir: getEnv('CHENXI_WORK_DIR', ''),
+  },
+  {
     name: 'cxr',
     port: 8080,
     exe: getEnv('CXR_EXE', 'python'),

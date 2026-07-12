@@ -53,11 +53,13 @@ export default function ServicesPage() {
   return (
     <>
       {/* ===== PAGE HEADER ===== */}
-      <section className="pt-28 pb-12 bg-navy text-paper text-center relative overflow-hidden">
+      <section className="relative h-[320px] bg-navy text-paper text-center overflow-hidden">
+        <img src="/images/banner-services.jpg" alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
+        <div className="absolute inset-0 bg-navy/70" />
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-copper/[0.06] rounded-full blur-[100px]" />
+          <div className="absolute top-1/3 left-1/4 w-[300px] h-[300px] bg-copper/[0.04] rounded-full blur-[100px]" />
         </div>
-        <div className="relative max-w-3xl mx-auto px-4">
+        <div className="relative h-full flex flex-col items-center justify-center max-w-3xl mx-auto px-4">
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
@@ -78,7 +80,7 @@ export default function ServicesPage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: easeOutExpo, delay: 0.2 }}
-            className="text-lg font-normal text-paper/70 leading-relaxed max-w-2xl mx-auto"
+            className="text-lg font-normal text-paper/80 leading-relaxed max-w-2xl mx-auto"
           >
             程信霖的产品和服务，不是零散的菜单：而是围绕小微企业真实需求搭建的完整闭环。从融资撮合的精准匹配，到咨询业务的深度诊断，再到AI工具的标准化赋能，最后到企业级落地服务，每一环都有明确的交付标准。
           </motion.p>
@@ -94,9 +96,12 @@ export default function ServicesPage() {
               <Handshake weight="bold" className="w-7 h-7 text-copper" />
               <h2 className="font-serif text-2xl md:text-3xl font-bold text-navy">融资信息撮合</h2>
             </motion.div>
-            <motion.p variants={revealScale} className="text-base font-normal text-navy leading-relaxed bg-copper/[0.06] border-l-[3px] border-copper py-4 px-6 mb-12">
+            <motion.p variants={revealScale} className="text-base font-normal text-navy leading-relaxed bg-copper/[0.06] border-l-[3px] border-copper py-4 px-6 mb-6">
               不是帮客户&ldquo;搞到钱&rdquo;的中介，而是帮客户先看清融资条件、规划融资路径，待条件成熟再对接合规资金渠道。
             </motion.p>
+            <motion.div variants={revealFromBelow} className="mb-12">
+              <img src="/images/biz-financing.jpg" alt="融资信息撮合" className="w-full h-48 object-cover" />
+            </motion.div>
           </Section>
 
           {/* 债务协商 */}
@@ -389,7 +394,7 @@ export default function ServicesPage() {
             </motion.p>
           </Section>
 
-          <ServiceBlock title="物业费催收服务" id="property-fee" items={[
+          <ServiceBlock title="物业费催收服务" id="property-fee" img="/images/service-property-fee.jpg" items={[
             <ServiceSection key="pain" label="痛点场景" icon={<span className="text-red-500">!</span>}>
               <p>物业公司最大的痛点不是管理，是收钱。物业费收缴率低、催收成本高、业主投诉多：催收团队要么效率低，要么手法粗暴引发纠纷。你需要的是专业、合规、标准化的催收服务。</p>
             </ServiceSection>,
@@ -401,7 +406,7 @@ export default function ServicesPage() {
             </ServiceSection>,
           ]} />
 
-          <ServiceBlock title="系统开发服务" id="system-dev" items={[
+          <ServiceBlock title="系统开发服务" id="system-dev" img="/images/service-system-dev.jpg" items={[
             <ServiceSection key="pain" label="痛点场景" icon={<span className="text-red-500">!</span>}>
               <p>你的业务数据散落在Excel、微信、纸质文件里：没有数据库、没有响应机制、没有线上流程。你需要把业务搬到线上，但请不起专职技术团队。</p>
             </ServiceSection>,
@@ -492,13 +497,18 @@ function ServiceSection({ label, icon, children }: { label: string; icon: React.
   )
 }
 
-function ServiceBlock({ title, id, items }: { title: string; id: string; items: React.ReactNode[] }) {
+function ServiceBlock({ title, id, img, items }: { title: string; id: string; img?: string; items: React.ReactNode[] }) {
   return (
     <motion.div
       id={id}
       variants={revealFromBelow}
       className="mb-12 last:mb-0 pb-12 border-b border-navy/[0.06] last:border-0 last:pb-0"
     >
+      {img && (
+        <motion.div variants={revealFromBelow} className="mb-6">
+          <img src={img} alt={title} className="w-full h-48 object-cover" />
+        </motion.div>
+      )}
       <motion.h3
         variants={revealFromBelow}
         className="font-serif text-xl font-bold text-navy mb-6"
