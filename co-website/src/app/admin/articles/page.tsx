@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
-import { isLoggedIn, isAdmin } from '@/lib/auth'
+import { getCurrentUser, isAdmin } from '@/lib/auth'
 
 interface Article {
   slug: string
@@ -54,7 +54,7 @@ export default function AdminArticlesPage() {
   }
 
   useEffect(() => {
-    setAuthorized(isLoggedIn() && isAdmin())
+    setAuthorized(!!getCurrentUser() && isAdmin())
     loadArticles()
   }, [])
 

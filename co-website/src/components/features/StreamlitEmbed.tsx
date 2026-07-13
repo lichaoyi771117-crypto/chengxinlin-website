@@ -1,15 +1,22 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Link from 'next/link'
+import { ArrowRight } from '@phosphor-icons/react'
+import { Button } from '@/components/ui/Button'
 
 interface StreamlitEmbedProps {
   title: string
   description: string
   url: string
   icon: string
+  /** Local service port for health-check matching. Required when `url` uses a tunnel/proxy (e.g. cloudflared) so the component can still match the correct backend. */
+  healthPort?: string
+  /** Fullscreen route within the site (e.g. `/app/qiaoxi`). When set, the button opens this route instead of the raw Streamlit URL. */
+  fullscreenHref?: string
 }
 
-export function StreamlitEmbed({ title, description, url, icon }: StreamlitEmbedProps) {
+export function StreamlitEmbed({ title, description, url, icon, healthPort, fullscreenHref }: StreamlitEmbedProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -18,8 +25,8 @@ export function StreamlitEmbed({ title, description, url, icon }: StreamlitEmbed
   const pollTimer = useRef<ReturnType<typeof setInterval> | null>(null)
   const mountedRef = useRef(true)
 
-  // Extract port from URL to identify this service
-  const servicePort = (() => {
+  // Use explicit healthPort if provided, otherwise try to extract from URL
+  const servicePort = healthPort || (() => {
     try {
       return new URL(url).port || '80'
     } catch {
@@ -104,13 +111,20 @@ export function StreamlitEmbed({ title, description, url, icon }: StreamlitEmbed
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-blue-800 text-white p-6">
-        <div className="flex items-center gap-3">
-          <span className="text-3xl">{icon}</span>
-          <div>
-            <h2 className="text-2xl font-bold">{title}</h2>
-            <p className="text-blue-100">{description}</p>
+      <div className="bg-navy text-paper p-6">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="text-3xl">{icon}</span>
+            <div>
+              <h2 className="text-2xl font-bold text-paper">{title}</h2>
+              <p className="text-paper/70">{description}</p>
+            </div>
           </div>
+          <Link href={fullscreenHref || url} target={fullscreenHref ? undefined : '_blank'} rel={fullscreenHref ? undefined : 'noopener noreferrer'}>
+            <Button variant="copper" size="sm" className="whitespace-nowrap">
+              全屏使用 <ArrowRight size={14} className="ml-1" weight="bold" />
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -119,7 +133,7 @@ export function StreamlitEmbed({ title, description, url, icon }: StreamlitEmbed
         {(!serviceReady || isLoading) && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4" />
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-copper mx-auto mb-4" />
               <p className="text-gray-500">
                 {!serviceReady ? '正在启动后端服务，首次启动约需10-20秒...' : '正在加载产品界面...'}
               </p>
@@ -138,7 +152,7 @@ export function StreamlitEmbed({ title, description, url, icon }: StreamlitEmbed
               </p>
               <button
                 onClick={handleRetry}
-                className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="px-6 py-2 bg-copper text-navy rounded-lg hover:bg-copper-light transition-colors"
               >
                 重试连接
               </button>

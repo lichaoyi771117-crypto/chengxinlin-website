@@ -20,10 +20,6 @@ export function getCurrentUser(): AuthUser | null {
   }
 }
 
-export function isLoggedIn(): boolean {
-  return getCurrentUser() !== null
-}
-
 export function isAdmin(): boolean {
   return getCurrentUser()?.role === 'admin'
 }
@@ -38,6 +34,7 @@ export async function login(account: string, password: string): Promise<{ succes
     const data = await res.json()
     if (data.success && data.user) {
       localStorage.setItem(AUTH_KEY, JSON.stringify(data.user))
+      localStorage.removeItem('cxl_auth_code') // 清除旧的授权码（登录即重置，避免残留）
       return { success: true, user: data.user }
     }
     return { success: false, error: data.error || '登录失败' }
@@ -62,6 +59,7 @@ export async function register(data: {
     const result = await res.json()
     if (result.success && result.user) {
       localStorage.setItem(AUTH_KEY, JSON.stringify(result.user))
+      localStorage.removeItem('cxl_auth_code') // 注册新账号时清除旧的授权码
       return { success: true, user: result.user }
     }
     return { success: false, error: result.error || '注册失败' }
@@ -72,4 +70,25 @@ export async function register(data: {
 
 export function logout() {
   localStorage.removeItem(AUTH_KEY)
+}
+
+export async function changePassword(data: {
+  account: string
+  oldPassword: string
+  newPassword: string
+}): Promise<{ success: boolean; error?: string }> {
+  try {
+    const res = await fetch('/api/auth/change-password', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+    const result = await res.json()
+    if (result.success) {
+      return { success: true }
+    }
+    return { success: false, error: result.error || '修改失败' }
+  } catch {
+    return { success: false, error: '网络错误' }
+  }
 }

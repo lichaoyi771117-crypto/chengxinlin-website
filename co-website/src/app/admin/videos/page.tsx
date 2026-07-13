@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Card } from '@/components/ui/Card'
-import { isLoggedIn, isAdmin } from '@/lib/auth'
+import { getCurrentUser, isAdmin } from '@/lib/auth'
 
 interface Video {
   slug: string
@@ -49,7 +49,7 @@ export default function AdminVideosPage() {
   }
 
   useEffect(() => {
-    setAuthorized(isLoggedIn() && isAdmin())
+    setAuthorized(!!getCurrentUser() && isAdmin())
     loadVideos()
   }, [])
 

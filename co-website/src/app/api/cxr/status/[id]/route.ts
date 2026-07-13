@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-const CXR_BASE_URL = process.env.CXR_BASE_URL || 'http://localhost:8080'
+const CXR_BASE_URL = process.env.CXR_BASE_URL || 'http://localhost:8090'
 
 export async function GET(
   request: NextRequest,

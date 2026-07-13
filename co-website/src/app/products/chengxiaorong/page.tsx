@@ -1,6 +1,11 @@
+'use client'
+
 import { StreamlitEmbed } from '@/components/features/StreamlitEmbed'
 import { Card } from '@/components/ui/Card'
 import { TrialUsageWrapper } from '@/components/features/TrialUsageWrapper'
+import Link from 'next/link'
+import { ArrowRight } from '@phosphor-icons/react'
+import { Button } from '@/components/ui/Button'
 
 export default function ChengxiaorongPage() {
   return (
@@ -15,14 +20,21 @@ export default function ChengxiaorongPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               国内第一个站在借款人立场、用合规方式告诉你该往哪贷、为什么的AI融资顾问
             </p>
+            <Link href="/app/chengxiaorong" className="inline-block mt-6">
+              <Button variant="copper" size="lg">
+                全屏使用 <ArrowRight size={18} className="ml-2" weight="bold" />
+              </Button>
+            </Link>
           </div>
 
           <div className="mb-12">
             <StreamlitEmbed
               title="程晓融 · AI融资体检"
               description="上传征信报告，5分钟获取专业融资建议"
-              url={process.env.NEXT_PUBLIC_CXR_URL || 'http://localhost:8080'}
+              url={process.env.NEXT_PUBLIC_CXR_URL || 'http://localhost:8090'}
               icon="🏦"
+              healthPort="8090"
+              fullscreenHref="/app/chengxiaorong"
             />
           </div>
 
@@ -48,23 +60,14 @@ export default function ChengxiaorongPage() {
           </div>
 
           <div className="bg-gray-50 rounded-2xl p-8 md:p-12 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">定价方案</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card className="text-center">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">免费版</h3>
-                <div className="text-3xl font-bold text-green-600 mb-4">免费</div>
-                <p className="text-gray-600 text-sm">OCR解析 + 结构化数据提取</p>
-              </Card>
-              <Card className="text-center border-2 border-blue-600">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">标准版</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-4">¥20<span className="text-sm text-gray-500">/次</span></div>
-                <p className="text-gray-600 text-sm">完整融资体检报告</p>
-              </Card>
-              <Card className="text-center">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">企业版</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-4">¥30<span className="text-sm text-gray-500">/次</span></div>
-                <p className="text-gray-600 text-sm">多文件融合分析</p>
-              </Card>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">授权方式</h2>
+            <p className="text-center text-gray-600 mb-6">购买一张授权码，畅享程晓融全部功能（各产品各 15 次）</p>
+            <div className="text-center">
+              <Link href="/authorization/purchase" className="inline-block">
+                <Button variant="copper" size="lg">
+                  购买授权码 <ArrowRight size={18} className="ml-2" weight="bold" />
+                </Button>
+              </Link>
             </div>
           </div>
 

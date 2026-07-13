@@ -1,6 +1,11 @@
+'use client'
+
 import { StreamlitEmbed } from '@/components/features/StreamlitEmbed'
 import { Card } from '@/components/ui/Card'
 import { TrialUsageWrapper } from '@/components/features/TrialUsageWrapper'
+import Link from 'next/link'
+import { ArrowRight } from '@phosphor-icons/react'
+import { Button } from '@/components/ui/Button'
 
 export default function QiaoxiPage() {
   return (
@@ -15,14 +20,21 @@ export default function QiaoxiPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               国内首个把"能不能签"四个字写进答案的AI商业合同决策系统
             </p>
+            <Link href="/app/qiaoxi" className="inline-block mt-6">
+              <Button variant="copper" size="lg">
+                全屏使用 <ArrowRight size={18} className="ml-2" weight="bold" />
+              </Button>
+            </Link>
           </div>
 
           <div className="mb-12">
             <StreamlitEmbed
               title="乔曦 · AI商业合同审查"
               description="上传合同，一分钟告诉你——能不能签"
-              url={process.env.NEXT_PUBLIC_QIAOXI_URL || 'http://localhost:8501'}
+              url={process.env.NEXT_PUBLIC_QIAOXI_URL || 'http://localhost:8511'}
               icon="⚖️"
+              healthPort="8511"
+              fullscreenHref="/app/qiaoxi"
             />
           </div>
 
@@ -48,23 +60,14 @@ export default function QiaoxiPage() {
           </div>
 
           <div className="bg-gray-50 rounded-2xl p-8 md:p-12 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">定价方案</h2>
-            <div className="grid md:grid-cols-3 gap-6">
-              <Card className="text-center">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">基础审查</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-4">¥20<span className="text-sm text-gray-500">/次</span></div>
-                <p className="text-gray-600 text-sm">合同条款风险分析</p>
-              </Card>
-              <Card className="text-center border-2 border-blue-600">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">高级重构</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-4">¥30<span className="text-sm text-gray-500">/次</span></div>
-                <p className="text-gray-600 text-sm">审查 + 新合同草案生成</p>
-              </Card>
-              <Card className="text-center">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">完整咨询</h3>
-                <div className="text-3xl font-bold text-blue-600 mb-4">¥50<span className="text-sm text-gray-500">/次</span></div>
-                <p className="text-gray-600 text-sm">审查 + 重构 + 专业建议</p>
-              </Card>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">授权方式</h2>
+            <p className="text-center text-gray-600 mb-6">购买一张授权码，畅享乔曦全部功能（各产品各 15 次）</p>
+            <div className="text-center">
+              <Link href="/authorization/purchase" className="inline-block">
+                <Button variant="copper" size="lg">
+                  购买授权码 <ArrowRight size={18} className="ml-2" weight="bold" />
+                </Button>
+              </Link>
             </div>
           </div>
 

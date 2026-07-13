@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 import Link from 'next/link'
-import { isLoggedIn } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/auth'
 
 interface Video {
   slug: string
@@ -27,7 +27,7 @@ export default function VideosPage() {
   const [playingVideo, setPlayingVideo] = useState<Video | null>(null)
 
   useEffect(() => {
-    setLoggedIn(isLoggedIn())
+    setLoggedIn(!!getCurrentUser())
     fetch('/api/videos')
       .then(res => res.json())
       .then(data => {

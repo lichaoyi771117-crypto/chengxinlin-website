@@ -20,7 +20,7 @@ const products = [
       '55,088条中国法律法规本地检索',
       '8类敏感信息自动脱敏',
     ],
-    price: '¥20/次起',
+    price: '授权码一码通用',
     href: '/products/qiaoxi',
   },
   {
@@ -34,21 +34,21 @@ const products = [
       '7大类20+财务指标计算',
       '5模块深度解读报告',
     ],
-    price: '¥20/次起',
+    price: '授权码一码通用',
     href: '/products/qiaoyuan',
   },
   {
     name: '程晓融',
     icon: '🏦',
     title: 'AI融资体检',
-    description: '国内第一个站在借款人立场、用合规方式告诉你该往哪贷、为什么的AI融资顾问',
+    description: '国内首个站在借款人立场、用合规方式告诉你该往哪贷、为什么的AI融资顾问',
     features: [
       '本地OCR解析征信报告',
       '昆明本地8大类几十款信贷产品库',
       '红绿灯规则引擎自动筛选',
       '三层合规自动过滤',
     ],
-    price: '免费体验',
+    price: '授权码一码通用',
     href: '/products/chengxiaorong',
   },
   {
@@ -62,7 +62,7 @@ const products = [
       '四级字体回退机制',
       '2-3轮对话智能起草',
     ],
-    price: '免费体验',
+    price: '授权码一码通用',
     href: '/products/chenxi',
   },
 ]
@@ -77,7 +77,7 @@ export default function ProductsPage() {
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white px-4">
           <h1 className="text-4xl md:text-5xl font-serif font-bold mb-4">AI产品矩阵</h1>
           <p className="text-lg text-white/80 max-w-3xl mx-auto font-normal">
-            三款自研AI商业决策产品，覆盖合同审查、财务分析、融资体检全场景
+            四款自研AI商业决策产品，一张授权码畅享全部
           </p>
         </div>
       </div>
@@ -106,7 +106,7 @@ export default function ProductsPage() {
                     ))}
                   </ul>
                   <div className="pt-4 border-t border-navy/[0.06] flex items-center justify-between">
-                    <span className="text-copper font-bold text-lg">{product.price}</span>
+                    <span className="text-copper font-bold text-sm">{product.price}</span>
                     <span className="text-copper font-medium text-sm">了解详情 →</span>
                   </div>
                 </div>

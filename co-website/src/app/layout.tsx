@@ -5,6 +5,7 @@ import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { Providers } from '@/components/Providers'
 import { StartupCheck } from '@/components/features/StartupCheck'
+import { TrialPromptGate } from '@/components/features/TrialPromptGate'
 
 const notoSans = Noto_Sans_SC({
   subsets: ['latin'],
@@ -39,6 +40,7 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col antialiased" style={{ fontFamily: "'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif" }}>
         <Providers>
           <StartupCheck />
+          <TrialPromptGate />
           <Header />
           <main className="flex-1">{children}</main>
           <Footer />

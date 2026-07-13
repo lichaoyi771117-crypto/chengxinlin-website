@@ -1,5 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getAllTrialCodes, createTrialCode, deactivateTrialCode, activateTrialCode, findUserByAccount } from '@/lib/db'
+import {
+  getAllAuthorizationCodes,
+  createAuthorizationCode,
+  deactivateAuthorizationCode,
+  activateAuthorizationCode,
+  findUserByAccount,
+  findBindingByCodeId,
+  countAdminFreeCodes,
+  getPaidOrdersTotal,
+} from '@/lib/db'
 
 function generateCode(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
@@ -10,6 +19,8 @@ function generateCode(): string {
   }
   return result
 }
+
+const ADMIN_QUOTA = Number(process.env.AUTH_CODE_ADMIN_QUOTA ?? 200)
 
 export async function GET(request: NextRequest) {
   try {
@@ -23,10 +34,26 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: '无权限' }, { status: 403 })
     }
 
-    const codes = getAllTrialCodes()
-    return NextResponse.json({ codes })
+    const codes = getAllAuthorizationCodes().map(code => {
+      const binding = findBindingByCodeId(code.id)
+      return { ...code, binding: binding || null }
+    })
+
+    const paidCount = codes.filter(c => c.source === 'paid').length
+    const freeCount = codes.filter(c => c.source === 'admin_free').length
+    const income = getPaidOrdersTotal()
+
+    return NextResponse.json({
+      codes,
+      stats: {
+        freeCount,
+        paidCount,
+        incomeTotal: income.total,
+        incomeCount: income.count,
+      },
+    })
   } catch (error) {
-    console.error('Get trial codes error:', error)
+    console.error('Get auth codes error:', error)
     return NextResponse.json({ error: '获取失败' }, { status: 500 })
   }
 }
@@ -45,8 +72,16 @@ export async function POST(request: NextRequest) {
 
     const { count, maxUses, note, expiresAt } = await request.json()
 
-    const numCodes = Math.min(Math.max(count || 1, 1), 50)
-    const uses = maxUses || 5
+    const requestedCount = Math.max(count || 1, 1)
+    const numCodes = Math.min(requestedCount, 50)
+    const uses = maxUses || 10
+
+    const currentUserCodes = countAdminFreeCodes(user.account)
+    if (currentUserCodes + requestedCount > ADMIN_QUOTA) {
+      return NextResponse.json({
+        error: `该管理员可免费生成的授权码上限为 ${ADMIN_QUOTA} 个（当前已生成 ${currentUserCodes} 个，本次尝试新增 ${requestedCount} 个）。超出部分请让客户付费购买。`
+      }, { status: 400 })
+    }
 
     const codes = []
     for (let i = 0; i < numCodes; i++) {
@@ -54,7 +89,15 @@ export async function POST(request: NextRequest) {
       let attempts = 0
       while (attempts < 10) {
         try {
-          const created = createTrialCode(code, uses, note || '', expiresAt)
+          const created = createAuthorizationCode(
+            code,
+            { qiaoxi: uses, qiaoyuan: uses, cxr: uses },
+            note || '',
+            expiresAt,
+            user.account,
+            'admin_free',
+            null
+          )
           codes.push(created)
           break
         } catch {
@@ -66,7 +109,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({ success: true, codes })
   } catch (error) {
-    console.error('Create trial codes error:', error)
+    console.error('Create auth codes error:', error)
     return NextResponse.json({ error: '创建失败' }, { status: 500 })
   }
 }
@@ -90,16 +133,16 @@ export async function PATCH(request: NextRequest) {
     }
 
     if (action === 'deactivate') {
-      deactivateTrialCode(id)
+      deactivateAuthorizationCode(id)
     } else if (action === 'activate') {
-      activateTrialCode(id)
+      activateAuthorizationCode(id)
     } else {
       return NextResponse.json({ error: '无效操作' }, { status: 400 })
     }
 
     return NextResponse.json({ success: true })
   } catch (error) {
-    console.error('Update trial code error:', error)
+    console.error('Update auth code error:', error)
     return NextResponse.json({ error: '操作失败' }, { status: 500 })
   }
 }

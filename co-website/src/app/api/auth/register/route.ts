@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcryptjs'
-import { createUser, findUserByAccount, findUserByPhone, findUserByEmail } from '@/lib/db'
+import { findUserByAccount, findUserByPhone, findUserByEmail, createUser } from '@/lib/db'
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const { account, password, nickname, phone, email } = body
 
-    // 验证必填字段
     if (!account || !password) {
       return NextResponse.json({ error: '账号和密码不能为空' }, { status: 400 })
     }
@@ -20,32 +19,33 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '密码至少6个字符' }, { status: 400 })
     }
 
-    // 检查账号是否已存在
-    if (findUserByAccount(account)) {
+    // 检查账号、手机号、邮箱是否已被注册
+    const existingAccount = findUserByAccount(account)
+    if (existingAccount) {
       return NextResponse.json({ error: '该账号已被注册' }, { status: 400 })
     }
 
-    // 检查手机号是否已存在
-    if (phone && findUserByPhone(phone)) {
-      return NextResponse.json({ error: '该手机号已被注册' }, { status: 400 })
+    if (phone) {
+      const existingPhone = findUserByPhone(phone)
+      if (existingPhone) {
+        return NextResponse.json({ error: '该手机号已被注册' }, { status: 400 })
+      }
     }
 
-    // 检查邮箱是否已存在
-    if (email && findUserByEmail(email)) {
-      return NextResponse.json({ error: '该邮箱已被注册' }, { status: 400 })
+    if (email) {
+      const existingEmail = findUserByEmail(email)
+      if (existingEmail) {
+        return NextResponse.json({ error: '该邮箱已被注册' }, { status: 400 })
+      }
     }
 
-    // 加密密码
     const hashedPassword = await bcrypt.hash(password, 10)
-
-    // 创建用户
     const user = createUser({
       account,
       password: hashedPassword,
-      nickname: nickname || account,
-      phone: phone || '',
-      email: email || '',
-      role: 'user',
+      nickname,
+      phone,
+      email,
     })
 
     return NextResponse.json({

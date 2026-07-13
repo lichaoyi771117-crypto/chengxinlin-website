@@ -1,6 +1,11 @@
+'use client'
+
 import { StreamlitEmbed } from '@/components/features/StreamlitEmbed'
 import { Card } from '@/components/ui/Card'
 import { TrialUsageWrapper } from '@/components/features/TrialUsageWrapper'
+import Link from 'next/link'
+import { ArrowRight } from '@phosphor-icons/react'
+import { Button } from '@/components/ui/Button'
 
 export default function QiaoyuanPage() {
   return (
@@ -15,14 +20,21 @@ export default function QiaoyuanPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               国内第一个把代账会计的Excel翻译成商业判断的AI财务分析师
             </p>
+            <Link href="/app/qiaoyuan" className="inline-block mt-6">
+              <Button variant="copper" size="lg">
+                全屏使用 <ArrowRight size={18} className="ml-2" weight="bold" />
+              </Button>
+            </Link>
           </div>
 
           <div className="mb-12">
             <StreamlitEmbed
               title="峤远 · AI财务报表分析"
               description="上传报表即出专业财务诊断报告"
-              url={process.env.NEXT_PUBLIC_QIAOYUAN_URL || 'http://localhost:8502'}
+              url={process.env.NEXT_PUBLIC_QIAOYUAN_URL || 'http://localhost:8512'}
               icon="📊"
+              healthPort="8512"
+              fullscreenHref="/app/qiaoyuan"
             />
           </div>
 
@@ -48,18 +60,14 @@ export default function QiaoyuanPage() {
           </div>
 
           <div className="bg-gray-50 rounded-2xl p-8 md:p-12 mb-12">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">定价方案</h2>
-            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              <Card className="text-center border-2 border-green-600">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">标准财务体检</h3>
-                <div className="text-3xl font-bold text-green-600 mb-4">¥20<span className="text-sm text-gray-500">/次</span></div>
-                <p className="text-gray-600 text-sm">完整财务指标分析 + 诊断报告</p>
-              </Card>
-              <Card className="text-center">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">融资能力专项</h3>
-                <div className="text-3xl font-bold text-green-600 mb-4">¥30<span className="text-sm text-gray-500">/次</span></div>
-                <p className="text-gray-600 text-sm">标准体检 + 融资能力评估建议</p>
-              </Card>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">授权方式</h2>
+            <p className="text-center text-gray-600 mb-6">购买一张授权码，畅享峤远全部功能（各产品各 15 次）</p>
+            <div className="text-center">
+              <Link href="/authorization/purchase" className="inline-block">
+                <Button variant="copper" size="lg">
+                  购买授权码 <ArrowRight size={18} className="ml-2" weight="bold" />
+                </Button>
+              </Link>
             </div>
           </div>
 
