@@ -69,11 +69,12 @@ export async function register(data: {
 }
 
 export function logout() {
+  // 调用登出 API 清除服务端 session cookie
+  fetch('/api/auth/logout', { method: 'POST' }).catch(() => {})
   localStorage.removeItem(AUTH_KEY)
 }
 
 export async function changePassword(data: {
-  account: string
   oldPassword: string
   newPassword: string
 }): Promise<{ success: boolean; error?: string }> {

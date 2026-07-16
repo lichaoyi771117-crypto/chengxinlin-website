@@ -144,10 +144,9 @@ export function TrialProvider({ children }: { children: ReactNode }) {
   ): Promise<boolean> => {
     if (!state.code) return false
     try {
-      const account = getCurrentUser()?.account || ''
       const res = await fetch('/api/authcode/transfer', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-user-account': account },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ code: state.code, from, to, amount, userId }),
       })
       const data = await res.json()

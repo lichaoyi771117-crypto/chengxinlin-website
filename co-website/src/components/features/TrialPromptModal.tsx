@@ -27,7 +27,7 @@ export function TrialPromptModal({ onClose }: TrialPromptModalProps) {
     try {
       const res = await fetch('/api/authcode/trial', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-user-account': user.account },
+        headers: { 'Content-Type': 'application/json' },
       })
       const data = await res.json()
       if (data.success) {
@@ -52,7 +52,7 @@ export function TrialPromptModal({ onClose }: TrialPromptModalProps) {
     // 拒绝：发请求增加计数，然后直接关弹窗
     fetch('/api/authcode/trial/decline', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'x-user-account': user.account },
+      headers: { 'Content-Type': 'application/json' },
     }).catch(() => {})
     onClose()
   }

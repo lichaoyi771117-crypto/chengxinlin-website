@@ -30,7 +30,7 @@ export function TrialPromptGate() {
 
       try {
         const res = await fetch('/api/authcode/trial', {
-          headers: { 'x-user-account': user.account },
+          headers: { 'Content-Type': 'application/json' },
         })
         const data = await res.json()
         if (data.eligible) {

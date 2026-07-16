@@ -1,25 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { findUserByAccount, createAndBindTrialCode, incrementTrialDecline, getTrialDecline, findAuthorizationBindingByUserId } from '@/lib/db'
+import { requireAuth } from '@/lib/session'
+import { createAndBindTrialCode, incrementTrialDecline, getTrialDecline, findAuthorizationBindingByUserId } from '@/lib/db'
 
 // GET: 查询当前用户是否有资格申请试用码
 export async function GET(request: NextRequest) {
   try {
-    const account = request.headers.get('x-user-account')
-    if (!account) {
+    const auth = requireAuth(request)
+    if ('error' in auth) {
       return NextResponse.json({ eligible: false, reason: '请先登录' })
-    }
-    const user = findUserByAccount(account)
-    if (!user) {
-      return NextResponse.json({ eligible: false, reason: '用户不存在' })
     }
 
     // 已有绑定授权码（含试用、付费、管理员发放）
-    const existing = findAuthorizationBindingByUserId(user.id)
+    const existing = findAuthorizationBindingByUserId(auth.user.id)
     if (existing) {
       return NextResponse.json({ eligible: false, reason: '您已拥有授权码', code: existing.code })
     }
 
-    const decline = getTrialDecline(user.id)
+    const decline = getTrialDecline(auth.user.id)
     if (decline >= 3) {
       return NextResponse.json({ eligible: false, reason: '您已连续3次拒绝申请试用码', declined: decline })
     }
@@ -34,30 +31,23 @@ export async function GET(request: NextRequest) {
 // POST: 用户确认申请试用码 → 系统自动生成+绑定+激活
 export async function POST(request: NextRequest) {
   try {
-    const account = request.headers.get('x-user-account')
-    if (!account) {
-      return NextResponse.json({ success: false, error: '请先登录' }, { status: 401 })
-    }
-
-    const user = findUserByAccount(account)
-    if (!user) {
-      return NextResponse.json({ success: false, error: '用户不存在' }, { status: 404 })
-    }
+    const auth = requireAuth(request)
+    if ('error' in auth) return auth.error
 
     // 已有绑定？
-    const existing = findAuthorizationBindingByUserId(user.id)
+    const existing = findAuthorizationBindingByUserId(auth.user.id)
     if (existing) {
       return NextResponse.json({ success: false, error: '您已拥有授权码' }, { status: 400 })
     }
 
     // 被拒绝限制？
-    const decline = getTrialDecline(user.id)
+    const decline = getTrialDecline(auth.user.id)
     if (decline >= 3) {
       return NextResponse.json({ success: false, error: '您已连续3次拒绝申请试用码。如需使用AI产品，请购买授权码或联系管理员。' }, { status: 400 })
     }
 
     // 生成+绑定+激活试用码
-    const result = createAndBindTrialCode(user.id)
+    const result = createAndBindTrialCode(auth.user.id)
     if (!result) {
       return NextResponse.json({ success: false, error: '试用码生成失败，您可能已有授权码' }, { status: 400 })
     }

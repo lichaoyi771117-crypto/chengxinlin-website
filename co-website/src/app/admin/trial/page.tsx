@@ -126,12 +126,11 @@ export default function AdminTrialPage() {
     try {
       const user = getCurrentUser()
       if (!user || !isAdmin()) { router.push('/'); return }
-      const headers = { 'x-user-account': user?.account || '' }
 
       const [codesRes, usersRes, unboundRes] = await Promise.all([
-        fetch('/api/authcode/codes', { headers }),
-        fetch('/api/admin/users', { headers }),
-        fetch('/api/admin/bindings', { headers }),
+        fetch('/api/authcode/codes'),
+        fetch('/api/admin/users'),
+        fetch('/api/admin/bindings'),
       ])
 
       const codesData = await codesRes.json()
@@ -152,12 +151,10 @@ export default function AdminTrialPage() {
   const handleCreate = async () => {
     setCreating(true)
     try {
-      const user = getCurrentUser()
       const res = await fetch('/api/authcode/codes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-account': user?.account || '',
         },
         body: JSON.stringify({
           count: createCount,
@@ -182,12 +179,10 @@ export default function AdminTrialPage() {
 
   const handleToggleActive = async (id: number, currentActive: number) => {
     try {
-      const user = getCurrentUser()
       await fetch('/api/authcode/codes', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-account': user?.account || '',
         },
         body: JSON.stringify({
           id,
@@ -213,12 +208,10 @@ export default function AdminTrialPage() {
     }
     setBinding(true)
     try {
-      const user = getCurrentUser()
       const res = await fetch('/api/admin/bindings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-account': user?.account || '',
         },
         body: JSON.stringify({
           codeId: selectedCodeId,
@@ -250,12 +243,10 @@ export default function AdminTrialPage() {
 
     setUnbinding(true)
     try {
-      const user = getCurrentUser()
       const res = await fetch('/api/admin/bindings', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'x-user-account': user?.account || '',
         },
         body: JSON.stringify({
           userIds: unbindUserIds,
@@ -836,9 +827,7 @@ export default function AdminTrialPage() {
                     setChangingPassword(true)
                     setPasswordError('')
                     try {
-                      const user = getCurrentUser()
                       const result = await changePassword({
-                        account: user?.account || '',
                         oldPassword,
                         newPassword,
                       })

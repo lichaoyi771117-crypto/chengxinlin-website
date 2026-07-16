@@ -1,18 +1,16 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { findUserByAccount, findAuthorizationBindingByUserId, createAuthorizationOrder } from '@/lib/db'
+import { requireAuth } from '@/lib/session'
+import { findAuthorizationBindingByUserId, createAuthorizationOrder } from '@/lib/db'
 import { getPaymentProvider } from '@/lib/payment'
 import { currentPrice, AUTH_CODE_CONFIG } from '@/lib/config'
 
 export async function POST(request: NextRequest) {
   try {
-    const account = request.headers.get('x-user-account')
-    const user = account ? findUserByAccount(account) : null
-    if (!user) {
-      return NextResponse.json({ error: '请先登录后再购买授权码' }, { status: 401 })
-    }
+    const auth = requireAuth(request)
+    if ('error' in auth) return auth.error
 
     // 已绑定有效授权码则不允许重复购买
-    const existing = findAuthorizationBindingByUserId(user.id)
+    const existing = findAuthorizationBindingByUserId(auth.user.id)
     if (existing && existing.is_active) {
       return NextResponse.json({ error: '您已拥有有效的授权码，无需重复购买' }, { status: 400 })
     }
@@ -20,9 +18,9 @@ export async function POST(request: NextRequest) {
     const amount = currentPrice()
     const method = AUTH_CODE_CONFIG.PAYMENT_PROVIDER
 
-    const order = createAuthorizationOrder(user.id, amount, method)
+    const order = createAuthorizationOrder(auth.user.id, amount, method)
     const provider = getPaymentProvider()
-    const payment = provider.createPayment({ orderId: order.id, amount, account: user.account })
+    const payment = provider.createPayment({ orderId: order.id, amount, account: auth.user.account })
 
     return NextResponse.json({
       success: true,

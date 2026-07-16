@@ -4,6 +4,7 @@ import { useState, useEffect, type ReactNode } from 'react'
 import { useTrial, type Product } from '@/lib/trial-context'
 import { TrialCodeModal } from '@/components/features/TrialCodeModal'
 import { TrialStatusBar, TrialQuotaToast } from '@/components/features/TrialStatus'
+import { getCurrentUser } from '@/lib/auth'
 
 interface TrialUsageWrapperProps {
   product: Product
@@ -38,7 +39,13 @@ export function TrialUsageWrapper({ product, productName, children }: TrialUsage
   }, [])
 
   const handleCloseModal = () => {
-    // 如果还没有验证就关弹窗 → 停在 loading 状态
+    // 未登录用户可以直接关弹窗
+    const user = getCurrentUser()
+    if (!user) {
+      setShowTrialModal(false)
+      return
+    }
+    // 已登录但还没有验证 → 停在 loading 状态
     if (!isVerified) return
     setShowTrialModal(false)
   }

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { checkRateLimit } from '@/lib/rate-limit'
 
 const CONTACTS_FILE = 'data/contacts.json'
 
@@ -26,6 +27,9 @@ try {
 }
 
 export async function POST(request: NextRequest) {
+  const limited = checkRateLimit(request, 'contact', 3, 60 * 1000)
+  if (limited) return limited
+
   try {
     const body = await request.json()
     const { name, phone, company, interest, message } = body
@@ -36,6 +40,21 @@ export async function POST(request: NextRequest) {
 
     if (!interest) {
       return NextResponse.json({ success: false, error: '请选择合作意向' }, { status: 400 })
+    }
+
+    // 手机号格式校验：11 位大陆手机号
+    if (!/^1[3-9]\d{9}$/.test(phone)) {
+      return NextResponse.json({ success: false, error: '请输入有效的手机号' }, { status: 400 })
+    }
+
+    // 消息长度限制
+    if (message && message.length > 1000) {
+      return NextResponse.json({ success: false, error: '留言内容不能超过1000字' }, { status: 400 })
+    }
+
+    // 姓名长度限制
+    if (name.length > 50) {
+      return NextResponse.json({ success: false, error: '姓名不能超过50字' }, { status: 400 })
     }
 
     const contact = {

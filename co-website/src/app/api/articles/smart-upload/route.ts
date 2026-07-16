@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import crypto from 'crypto'
 import { analyzeArticle } from '@/lib/deepseek'
 import { insertImagesEvenly } from '@/lib/article-layout'
+import { requireAdmin } from '@/lib/session'
 
 const UPLOAD_DIR = path.join(process.cwd(), 'public', 'uploads', 'images')
 
@@ -71,6 +73,9 @@ function htmlToMarkdown(html: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const formData = await request.formData()
     const files = formData.getAll('files') as File[]
 
@@ -114,8 +119,8 @@ export async function POST(request: NextRequest) {
       const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
       if (!allowedTypes.includes(imgFile.type)) continue
       if (imgFile.size > 10 * 1024 * 1024) continue
-      const ext = imgFile.name.split('.').pop() || 'png'
-      const filename = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`
+      const ext = (imgFile.name.split('.').pop() || '').toLowerCase()
+      const filename = `${Date.now()}-${crypto.randomBytes(8).toString('hex')}.${ext}`
       fs.writeFileSync(
         path.join(UPLOAD_DIR, filename),
         Buffer.from(await imgFile.arrayBuffer())
@@ -128,8 +133,9 @@ export async function POST(request: NextRequest) {
     try {
       analysis = await analyzeArticle(content)
     } catch (err) {
+      console.error('AI analysis error:', err)
       return NextResponse.json(
-        { error: 'AI 分析失败：' + (err as Error).message },
+        { error: 'AI 分析失败，请稍后重试' },
         { status: 500 }
       )
     }
@@ -148,7 +154,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Smart upload error:', error)
     return NextResponse.json(
-      { error: '处理失败：' + (error as Error).message },
+      { error: '处理失败，请稍后重试' },
       { status: 500 }
     )
   }

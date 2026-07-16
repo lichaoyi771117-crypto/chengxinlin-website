@@ -37,6 +37,26 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
       img: ['src', 'alt', 'class', 'loading'],
       '*': ['class'],
     },
+    // 限制 URL scheme：仅允许 http/https/mailto，阻止 javascript:/data: 等
+    allowedSchemes: ['http', 'https', 'mailto'],
+    // 对 <a> 标签的 href 做 scheme 过滤
+    allowedSchemesByTag: {
+      a: ['http', 'https', 'mailto'],
+      img: ['http', 'https', 'data'],
+    },
+    // 自动给 <a> 标签添加 rel="noopener noreferrer"
+    transformTags: {
+      'a': (tagName, attribs) => ({
+        tagName,
+        attribs: {
+          ...attribs,
+          rel: 'noopener noreferrer',
+          target: attribs.target || '_blank',
+        },
+      }),
+    },
+    // 不允许 <style> 和 <script> 标签
+    disallowedTagsMode: 'escape',
   })
 
   return (

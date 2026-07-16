@@ -2,6 +2,7 @@ import Database from 'better-sqlite3'
 import path from 'path'
 import fs from 'fs'
 import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
 
 let _db: Database.Database | null = null
 
@@ -305,8 +306,9 @@ const TRIAL_VALIDITY_MS = 30 * 24 * 60 * 60 * 1000 // 30 天
 
 function generateTrialCodeStr(userId: number): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+  const bytes = crypto.randomBytes(6)
   let suffix = ''
-  for (let i = 0; i < 6; i++) suffix += chars.charAt(Math.floor(Math.random() * chars.length))
+  for (let i = 0; i < 6; i++) suffix += chars.charAt(bytes[i] % chars.length)
   return `TRY-${userId}-${suffix}`
 }
 

@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAdmin } from '@/lib/session'
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const formData = await request.formData()
     const docxFile = formData.get('file') as File | null
 
@@ -29,6 +33,6 @@ export async function POST(request: NextRequest) {
     })
   } catch (error) {
     console.error('Convert error:', error)
-    return NextResponse.json({ error: '转换失败: ' + (error as Error).message }, { status: 500 })
+    return NextResponse.json({ error: '文档转换失败，请稍后重试' }, { status: 500 })
   }
 }

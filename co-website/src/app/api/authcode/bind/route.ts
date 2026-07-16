@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { requireAuth } from '@/lib/session'
 import { findAuthorizationCode, findAuthorizationBindingByUserId, bindAuthorizationCodeToUser } from '@/lib/db'
 
 const UNLIMITED = 999999
@@ -15,14 +16,13 @@ function buildRemaining(code: any) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { code, userId, account } = await request.json()
+    const auth = requireAuth(request)
+    if ('error' in auth) return auth.error
+
+    const { code } = await request.json()
 
     if (!code || typeof code !== 'string') {
       return NextResponse.json({ success: false, error: '请输入授权码' }, { status: 400 })
-    }
-
-    if (!userId) {
-      return NextResponse.json({ success: false, error: '请先登录' }, { status: 401 })
     }
 
     const authCode = findAuthorizationCode(code.trim().toUpperCase())
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: '该授权码已过期' }, { status: 403 })
     }
 
-    const existingBinding = findAuthorizationBindingByUserId(userId)
+    const existingBinding = findAuthorizationBindingByUserId(auth.user.id)
     if (existingBinding) {
       // 已绑定到同一个码 → 视为成功（用户重新输入自己已绑定的码，直接放行）
       if (existingBinding.code === authCode.code) {
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ success: false, error: '您已绑定过授权码，每个账号只能绑定一个授权码' }, { status: 400 })
     }
 
-    bindAuthorizationCodeToUser(authCode.id, userId)
+    bindAuthorizationCodeToUser(authCode.id, auth.user.id)
 
     return NextResponse.json({
       success: true,

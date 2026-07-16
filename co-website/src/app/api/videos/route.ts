@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getAllVideos, saveVideo, deleteVideo, generateVideoSlug, type Video } from '@/lib/videos'
+import { requireAdmin } from '@/lib/session'
 
 export async function GET() {
   try {
@@ -13,6 +14,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const body = await request.json()
     const { title, description, category, videoUrl, coverImage, duration, slug: existingSlug } = body
 
@@ -45,6 +49,9 @@ export async function POST(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const { searchParams } = new URL(request.url)
     const slug = searchParams.get('slug')
 

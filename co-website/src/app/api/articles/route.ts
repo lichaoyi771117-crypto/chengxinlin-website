@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { requireAdmin } from '@/lib/session'
 
 const ARTICLES_DIR = path.join(process.cwd(), 'src', 'content', 'articles')
 
@@ -77,6 +78,9 @@ function htmlToMarkdown(html: string): string {
 
 export async function POST(request: NextRequest) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const contentType = request.headers.get('content-type') || ''
 
     let title, category, author, excerpt, readTime, tags, content, coverImage
@@ -153,7 +157,7 @@ coverImage: "${(coverImage || '').replace(/"/g, '\\"')}"
     return NextResponse.json({ success: true, slug, filePath })
   } catch (error) {
     console.error('Save article error:', error)
-    return NextResponse.json({ error: '保存失败: ' + (error as Error).message }, { status: 500 })
+    return NextResponse.json({ error: '保存失败，请稍后重试' }, { status: 500 })
   }
 }
 
@@ -209,6 +213,9 @@ export async function GET() {
 
 export async function DELETE(request: NextRequest) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const { searchParams } = new URL(request.url)
     const slug = searchParams.get('slug')
 

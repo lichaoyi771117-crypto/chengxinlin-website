@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
+import { requireAdmin } from '@/lib/session'
 
 const ARTICLES_DIR = path.join(process.cwd(), 'src', 'content', 'articles')
 
@@ -76,6 +77,9 @@ export async function PUT(
   { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const { slug } = await params
 
     if (!/^[a-z0-9][a-z0-9\-]*$/.test(slug)) {
@@ -114,6 +118,6 @@ coverImage: "${(coverImage || '').replace(/"/g, '\\"')}"
     return NextResponse.json({ success: true, slug })
   } catch (error) {
     console.error('Update article error:', error)
-    return NextResponse.json({ error: '更新失败: ' + (error as Error).message }, { status: 500 })
+    return NextResponse.json({ error: '更新失败，请稍后重试' }, { status: 500 })
   }
 }

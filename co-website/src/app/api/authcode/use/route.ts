@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getSessionUser } from '@/lib/session'
 import { findAuthorizationCode, incrementAuthorizationUsage, addAuthorizationLog, findAuthorizationBindingByUserId } from '@/lib/db'
 
 const UNLIMITED = 999999
@@ -15,11 +16,15 @@ function buildRemaining(code: any) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { code, product, userId } = await request.json()
+    const { code, product, userId: bodyUserId } = await request.json()
 
     if (!code || !product) {
       return NextResponse.json({ success: false, error: '参数错误' }, { status: 400 })
     }
+
+    // 优先从 session 获取用户（主站调用），兜底 body userId（子程序调用）
+    const sessionUser = getSessionUser(request)
+    const userId = sessionUser?.id ?? bodyUserId ?? null
 
     const authCode = findAuthorizationCode(code.trim().toUpperCase())
     if (!authCode) {
@@ -32,6 +37,14 @@ export async function POST(request: NextRequest) {
 
     if (authCode.expires_at && new Date(authCode.expires_at) < new Date()) {
       return NextResponse.json({ success: false, error: '该授权码已过期' }, { status: 403 })
+    }
+
+    // 如果有登录用户，校验授权码是否绑定给该用户
+    if (sessionUser) {
+      const binding = findAuthorizationBindingByUserId(sessionUser.id)
+      if (binding && binding.code_id !== authCode.id) {
+        return NextResponse.json({ success: false, error: '该授权码不属于当前登录用户' }, { status: 403 })
+      }
     }
 
     // 陈曦不限次数

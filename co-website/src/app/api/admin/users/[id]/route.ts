@@ -1,20 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { findUserByAccount, updateUser, softDeleteUser } from '@/lib/db'
+import { updateUser, softDeleteUser, getAllUsersWithBindings } from '@/lib/db'
+import { requireAdmin } from '@/lib/session'
 
 export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const account = request.headers.get('x-user-account')
-    if (!account) {
-      return NextResponse.json({ error: '请先登录' }, { status: 401 })
-    }
-
-    const admin = findUserByAccount(account)
-    if (!admin || admin.role !== 'admin') {
-      return NextResponse.json({ error: '无权限' }, { status: 403 })
-    }
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
 
     const { id } = await params
     // 这里复用 getAllUsersWithBindings 并过滤
@@ -38,15 +32,8 @@ export async function PUT(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const account = request.headers.get('x-user-account')
-    if (!account) {
-      return NextResponse.json({ error: '请先登录' }, { status: 401 })
-    }
-
-    const admin = findUserByAccount(account)
-    if (!admin || admin.role !== 'admin') {
-      return NextResponse.json({ error: '无权限' }, { status: 403 })
-    }
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
 
     const { id } = await params
     const body = await request.json()
@@ -71,15 +58,8 @@ export async function DELETE(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const account = request.headers.get('x-user-account')
-    if (!account) {
-      return NextResponse.json({ error: '请先登录' }, { status: 401 })
-    }
-
-    const admin = findUserByAccount(account)
-    if (!admin || admin.role !== 'admin') {
-      return NextResponse.json({ error: '无权限' }, { status: 403 })
-    }
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
 
     const { id } = await params
     softDeleteUser(parseInt(id))

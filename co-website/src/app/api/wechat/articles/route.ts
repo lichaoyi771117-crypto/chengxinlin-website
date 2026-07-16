@@ -1,8 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { fetchPublishedArticles, fetchArticleDetail } from '@/lib/wechat'
+import { requireAdmin } from '@/lib/session'
 
 export async function GET(request: NextRequest) {
   try {
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
+
     const { searchParams } = new URL(request.url)
     const action = searchParams.get('action') || 'list'
     const offset = parseInt(searchParams.get('offset') || '0')
@@ -19,7 +23,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('WeChat API error:', error)
     return NextResponse.json(
-      { success: false, error: error instanceof Error ? error.message : '未知错误' },
+      { success: false, error: '获取微信文章失败，请稍后重试' },
       { status: 500 }
     )
   }

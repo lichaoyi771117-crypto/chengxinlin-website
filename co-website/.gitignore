@@ -40,9 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# database runtime files
+# database files (runtime + data)
+*.db
 *.db-shm
 *.db-wal
+data/
 
 # contact form data
 data/contacts.json

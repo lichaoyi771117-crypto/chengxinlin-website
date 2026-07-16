@@ -34,7 +34,19 @@ class AggregatorStubProvider implements PaymentProvider {
     }
   }
 
-  verifyPayment(): boolean {
+  /**
+   * 支付验证：检查 providerOrderId 格式是否合法
+   * 桩环境：验证订单号格式（AGG-{orderId}-{timestamp}）
+   * 真实接入时：调用聚合收款平台 API 查询订单状态
+   */
+  verifyPayment(providerOrderId: string): boolean {
+    if (!providerOrderId || typeof providerOrderId !== 'string') return false
+    // 桩环境格式校验：AGG-{number}-{number}
+    const match = providerOrderId.match(/^AGG-(\d+)-(\d+)$/)
+    if (!match) return false
+    // 校验时间戳不能是未来时间（防止伪造）
+    const timestamp = parseInt(match[2], 10)
+    if (isNaN(timestamp) || timestamp > Date.now() + 60000) return false
     return true
   }
 }
@@ -53,7 +65,18 @@ class BankQrStubProvider implements PaymentProvider {
     }
   }
 
-  verifyPayment(): boolean {
+  /**
+   * 支付验证：检查 providerOrderId 格式是否合法
+   * 桩环境：验证订单号格式（BANK-{orderId}-{timestamp}）
+   * 真实接入时：调用银行 API 或检查回调通知
+   */
+  verifyPayment(providerOrderId: string): boolean {
+    if (!providerOrderId || typeof providerOrderId !== 'string') return false
+    // 桩环境格式校验：BANK-{number}-{number}
+    const match = providerOrderId.match(/^BANK-(\d+)-(\d+)$/)
+    if (!match) return false
+    const timestamp = parseInt(match[2], 10)
+    if (isNaN(timestamp) || timestamp > Date.now() + 60000) return false
     return true
   }
 }

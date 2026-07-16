@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { getSessionUser } from '@/lib/session'
 import { findAuthorizationCode, findAuthorizationBindingByUserId } from '@/lib/db'
 
 const UNLIMITED = 999999
@@ -25,7 +26,11 @@ function buildCaps(code: any) {
 
 export async function POST(request: NextRequest) {
   try {
-    const { code, userId } = await request.json()
+    const { code, userId: bodyUserId } = await request.json()
+
+    // 优先从 session 获取用户（主站调用），兜底 body userId（子程序调用）
+    const sessionUser = getSessionUser(request)
+    const userId = sessionUser?.id ?? bodyUserId
 
     let authCode: any = null
 

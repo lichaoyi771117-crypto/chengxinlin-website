@@ -91,10 +91,10 @@ export function FullscreenEmbed({ title, url, healthPort, backHref = '/products'
 
   return (
     <div className="fixed inset-0 flex flex-col bg-white z-50">
-      {/* Floating back button */}
+      {/* Floating back button — positioned top-right to avoid covering Streamlit's sidebar toggle (top-left) */}
       <Link
         href={backHref}
-        className="absolute top-4 left-4 z-[60] flex items-center gap-2 px-3 py-2 bg-navy/80 backdrop-blur-sm text-white rounded-lg hover:bg-navy/95 transition-colors text-sm shadow-lg border border-copper/20"
+        className="absolute top-4 right-4 z-[60] flex items-center gap-2 px-3 py-2 bg-navy/80 backdrop-blur-sm text-white rounded-lg hover:bg-navy/95 transition-colors text-sm shadow-lg border border-copper/20"
       >
         <ArrowLeft size={16} weight="bold" />
         <span>返回网站</span>

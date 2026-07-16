@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
+import crypto from 'crypto'
+import { requireAuth } from '@/lib/session'
 import {
   getAuthorizationOrderById,
   markOrderPaid,
   createAuthorizationCode,
   bindAuthorizationCodeToUser,
-  findUserByAccount,
 } from '@/lib/db'
 import { getPaymentProvider } from '@/lib/payment'
 import { AUTH_CODE_CONFIG } from '@/lib/config'
@@ -13,10 +14,11 @@ const UNLIMITED = 999999
 
 function generateCode(): string {
   const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+  const bytes = crypto.randomBytes(8)
   let result = 'CXL-'
   for (let i = 0; i < 8; i++) {
     if (i === 4) result += '-'
-    result += chars.charAt(Math.floor(Math.random() * chars.length))
+    result += chars.charAt(bytes[i] % chars.length)
   }
   return result
 }
@@ -24,11 +26,8 @@ function generateCode(): string {
 // 模拟/真实支付确认：标记订单已支付 → 自动生成付费授权码 → 自动绑定客户
 export async function POST(request: NextRequest) {
   try {
-    const account = request.headers.get('x-user-account')
-    const user = account ? findUserByAccount(account) : null
-    if (!user) {
-      return NextResponse.json({ error: '请先登录' }, { status: 401 })
-    }
+    const auth = requireAuth(request)
+    if ('error' in auth) return auth.error
 
     const { orderId, providerOrderId } = await request.json()
     if (!orderId) {
@@ -39,7 +38,7 @@ export async function POST(request: NextRequest) {
     if (!order) {
       return NextResponse.json({ error: '订单不存在' }, { status: 404 })
     }
-    if (order.user_id !== user.id) {
+    if (order.user_id !== auth.user.id) {
       return NextResponse.json({ error: '无权操作该订单' }, { status: 403 })
     }
     if (order.status === 'paid') {
@@ -82,7 +81,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '授权码生成失败' }, { status: 500 })
     }
 
-    bindAuthorizationCodeToUser(created.id, user.id)
+    bindAuthorizationCodeToUser(created.id, auth.user.id)
 
     const remaining = {
       qiaoxi: created.qiaoxi_cap - created.qiaoxi_used,

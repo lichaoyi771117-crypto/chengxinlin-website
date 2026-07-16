@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 import { spawn, type ChildProcess } from 'child_process'
 import net from 'net'
 import { servicesConfig } from '@/lib/services-config'
+import { requireAdmin } from '@/lib/session'
 
 // Track running processes to avoid duplicates
 const runningProcesses = new Map<string, ChildProcess>()
@@ -44,7 +45,10 @@ function startServiceAsync(config: typeof servicesConfig[0]): void {
   })
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  const auth = requireAdmin(request)
+  if ('error' in auth) return auth.error
+
   const results: Array<{ name: string; port: number; status: string }> = []
 
   for (const svc of servicesConfig) {

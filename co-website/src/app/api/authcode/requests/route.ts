@@ -1,16 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { findUserByAccount, getPendingAuthorizationRequests, approveAuthorizationRequest, rejectAuthorizationRequest } from '@/lib/db'
+import { requireAdmin } from '@/lib/session'
+import { getPendingAuthorizationRequests, approveAuthorizationRequest, rejectAuthorizationRequest } from '@/lib/db'
 
 export async function GET(request: NextRequest) {
   try {
-    const account = request.headers.get('x-user-account')
-    if (!account) {
-      return NextResponse.json({ error: '请先登录' }, { status: 401 })
-    }
-    const user = findUserByAccount(account)
-    if (!user || user.role !== 'admin') {
-      return NextResponse.json({ error: '无权限' }, { status: 403 })
-    }
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
 
     const requests = getPendingAuthorizationRequests()
     return NextResponse.json({ requests })
@@ -22,14 +17,8 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const account = request.headers.get('x-user-account')
-    if (!account) {
-      return NextResponse.json({ error: '请先登录' }, { status: 401 })
-    }
-    const user = findUserByAccount(account)
-    if (!user || user.role !== 'admin') {
-      return NextResponse.json({ error: '无权限' }, { status: 403 })
-    }
+    const auth = requireAdmin(request)
+    if ('error' in auth) return auth.error
 
     const { requestId, action } = await request.json()
     if (!requestId || !action) {
@@ -37,13 +26,13 @@ export async function POST(request: NextRequest) {
     }
 
     if (action === 'approve') {
-      const code = approveAuthorizationRequest(requestId, user.id)
+      const code = approveAuthorizationRequest(requestId, auth.user.id)
       if (!code) {
         return NextResponse.json({ error: '审批失败：无可用的授权码' }, { status: 400 })
       }
       return NextResponse.json({ success: true, code: code.code })
     } else if (action === 'reject') {
-      rejectAuthorizationRequest(requestId, user.id)
+      rejectAuthorizationRequest(requestId, auth.user.id)
       return NextResponse.json({ success: true })
     }
 

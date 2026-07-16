@@ -46,10 +46,9 @@ export default function PurchasePage() {
     setBusy(true)
     setError('')
     try {
-      const account = getCurrentUser()?.account || ''
       const res = await fetch('/api/authcode/purchase', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-user-account': account },
+        headers: { 'Content-Type': 'application/json' },
       })
       const data = await res.json()
       if (!data.success) {
@@ -71,10 +70,9 @@ export default function PurchasePage() {
     setBusy(true)
     setError('')
     try {
-      const account = getCurrentUser()?.account || ''
       const res = await fetch('/api/authcode/payment/confirm', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-user-account': account },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ orderId: order.id, providerOrderId: order.providerOrderId }),
       })
       const data = await res.json()

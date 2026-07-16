@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { findUserByAccount, findAuthorizationCode, findAuthorizationBindingByUserId, transferCap } from '@/lib/db'
+import { requireAuth } from '@/lib/session'
+import { findAuthorizationCode, findAuthorizationBindingByUserId, transferCap } from '@/lib/db'
 
 const UNLIMITED = 999999
 
 export async function POST(request: NextRequest) {
   try {
-    const account = request.headers.get('x-user-account')
-    const user = account ? findUserByAccount(account) : null
-    if (!user) {
-      return NextResponse.json({ error: '请先登录' }, { status: 401 })
-    }
+    const auth = requireAuth(request)
+    if ('error' in auth) return auth.error
 
     const { code, from, to, amount } = await request.json()
 
@@ -29,7 +27,7 @@ export async function POST(request: NextRequest) {
     }
 
     // 只能划转自己绑定的码
-    const binding = findAuthorizationBindingByUserId(user.id)
+    const binding = findAuthorizationBindingByUserId(auth.user.id)
     if (!binding || binding.code_id !== authCode.id) {
       return NextResponse.json({ error: '无权操作该授权码' }, { status: 403 })
     }
