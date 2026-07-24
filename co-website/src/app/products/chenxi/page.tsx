@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
 import { ArrowRight } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
@@ -8,6 +9,8 @@ import { Card } from '@/components/ui/Card'
 import { TrialUsageWrapper } from '@/components/features/TrialUsageWrapper'
 
 export default function ChenxiPage() {
+  const [fullscreen, setFullscreen] = useState(false)
+
   return (
     <TrialUsageWrapper product="chenxi" productName="陈曦">
       <div className="py-12">
@@ -20,11 +23,6 @@ export default function ChenxiPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               结构驱动 · 国标排版 · 四角色把关 — 体制内公文起草的精准工具
             </p>
-            <Link href="/app/chenxi" className="inline-block mt-6">
-              <Button variant="copper" size="lg">
-                全屏使用 <ArrowRight size={18} className="ml-2" weight="bold" />
-              </Button>
-            </Link>
           </div>
 
           <div className="mb-12">
@@ -34,7 +32,8 @@ export default function ChenxiPage() {
               url={process.env.NEXT_PUBLIC_CHENXI_URL || 'http://localhost:8513'}
               icon="📝"
               healthPort="8513"
-              fullscreenHref="/app/chenxi"
+              fullscreen={fullscreen}
+              onToggleFullscreen={setFullscreen}
             />
           </div>
 

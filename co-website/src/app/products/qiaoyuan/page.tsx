@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { StreamlitEmbed } from '@/components/features/StreamlitEmbed'
 import { Card } from '@/components/ui/Card'
 import { TrialUsageWrapper } from '@/components/features/TrialUsageWrapper'
@@ -8,6 +9,8 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 
 export default function QiaoyuanPage() {
+  const [fullscreen, setFullscreen] = useState(false)
+
   return (
     <TrialUsageWrapper product="qiaoyuan" productName="峤远">
       <div className="py-12">
@@ -20,11 +23,6 @@ export default function QiaoyuanPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               国内第一个把代账会计的Excel翻译成商业判断的AI财务分析师
             </p>
-            <Link href="/app/qiaoyuan" className="inline-block mt-6">
-              <Button variant="copper" size="lg">
-                全屏使用 <ArrowRight size={18} className="ml-2" weight="bold" />
-              </Button>
-            </Link>
           </div>
 
           <div className="mb-12">
@@ -34,7 +32,8 @@ export default function QiaoyuanPage() {
               url={process.env.NEXT_PUBLIC_QIAOYUAN_URL || 'http://localhost:8512'}
               icon="📊"
               healthPort="8512"
-              fullscreenHref="/app/qiaoyuan"
+              fullscreen={fullscreen}
+              onToggleFullscreen={setFullscreen}
             />
           </div>
 

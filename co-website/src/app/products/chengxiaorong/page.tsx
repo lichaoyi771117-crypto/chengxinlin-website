@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { StreamlitEmbed } from '@/components/features/StreamlitEmbed'
 import { Card } from '@/components/ui/Card'
 import { TrialUsageWrapper } from '@/components/features/TrialUsageWrapper'
@@ -8,6 +9,8 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 
 export default function ChengxiaorongPage() {
+  const [fullscreen, setFullscreen] = useState(false)
+
   return (
     <TrialUsageWrapper product="cxr" productName="程晓融">
       <div className="py-12">
@@ -20,11 +23,6 @@ export default function ChengxiaorongPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               国内第一个站在借款人立场、用合规方式告诉你该往哪贷、为什么的AI融资顾问
             </p>
-            <Link href="/app/chengxiaorong" className="inline-block mt-6">
-              <Button variant="copper" size="lg">
-                全屏使用 <ArrowRight size={18} className="ml-2" weight="bold" />
-              </Button>
-            </Link>
           </div>
 
           <div className="mb-12">
@@ -34,7 +32,8 @@ export default function ChengxiaorongPage() {
               url={process.env.NEXT_PUBLIC_CXR_URL || 'http://localhost:8090'}
               icon="🏦"
               healthPort="8090"
-              fullscreenHref="/app/chengxiaorong"
+              fullscreen={fullscreen}
+              onToggleFullscreen={setFullscreen}
             />
           </div>
 

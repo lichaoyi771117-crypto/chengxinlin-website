@@ -1,8 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import Link from 'next/link'
-import { ArrowRight } from '@phosphor-icons/react'
+import { ArrowsIn, ArrowsOut } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 
 interface StreamlitEmbedProps {
@@ -12,11 +11,13 @@ interface StreamlitEmbedProps {
   icon: string
   /** Local service port for health-check matching. Required when `url` uses a tunnel/proxy (e.g. cloudflared) so the component can still match the correct backend. */
   healthPort?: string
-  /** Fullscreen route within the site (e.g. `/app/qiaoxi`). When set, the button opens this route instead of the raw Streamlit URL. */
-  fullscreenHref?: string
+  /** Whether the embed is currently in fullscreen mode */
+  fullscreen?: boolean
+  /** Callback when user toggles fullscreen */
+  onToggleFullscreen?: (fullscreen: boolean) => void
 }
 
-export function StreamlitEmbed({ title, description, url, icon, healthPort, fullscreenHref }: StreamlitEmbedProps) {
+export function StreamlitEmbed({ title, description, url, icon, healthPort, fullscreen = false, onToggleFullscreen }: StreamlitEmbedProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
@@ -108,28 +109,50 @@ export function StreamlitEmbed({ title, description, url, icon, healthPort, full
     }
   }
 
+  const containerClass = fullscreen
+    ? 'fixed inset-0 z-50 flex flex-col bg-white'
+    : 'bg-white rounded-xl shadow-md overflow-hidden'
+
+  const headerClass = fullscreen
+    ? 'bg-navy text-paper p-3 flex items-center justify-between'
+    : 'bg-navy text-paper p-6'
+
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden">
+    <div className={containerClass}>
       {/* Header */}
-      <div className="bg-navy text-paper p-6">
-        <div className="flex items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">{icon}</span>
-            <div>
-              <h2 className="text-2xl font-bold text-paper">{title}</h2>
-              <p className="text-paper/70">{description}</p>
-            </div>
+      <div className={headerClass}>
+        <div className="flex items-center gap-3">
+          <span className="text-3xl">{icon}</span>
+          <div>
+            <h2 className="text-2xl font-bold text-paper">{title}</h2>
+            {!fullscreen && <p className="text-paper/70">{description}</p>}
           </div>
-          <Link href={fullscreenHref || url} target={fullscreenHref ? undefined : '_blank'} rel={fullscreenHref ? undefined : 'noopener noreferrer'}>
-            <Button variant="copper" size="sm" className="whitespace-nowrap">
-              全屏使用 <ArrowRight size={14} className="ml-1" weight="bold" />
-            </Button>
-          </Link>
         </div>
+        {/* Fullscreen toggle button */}
+        {onToggleFullscreen && (
+          <Button
+            variant="copper"
+            size="sm"
+            onClick={() => onToggleFullscreen(!fullscreen)}
+            className="whitespace-nowrap"
+          >
+            {fullscreen ? (
+              <>
+                <ArrowsIn size={14} className="mr-1" weight="bold" />
+                退出全屏
+              </>
+            ) : (
+              <>
+                <ArrowsOut size={14} className="mr-1" weight="bold" />
+                全屏使用
+              </>
+            )}
+          </Button>
+        )}
       </div>
 
       {/* iframe Content */}
-      <div className="relative" style={{ minHeight: '600px' }}>
+      <div className="relative flex-1" style={{ minHeight: fullscreen ? undefined : '600px' }}>
         {(!serviceReady || isLoading) && (
           <div className="absolute inset-0 flex items-center justify-center bg-gray-50 z-10">
             <div className="text-center">
@@ -164,7 +187,7 @@ export function StreamlitEmbed({ title, description, url, icon, healthPort, full
           ref={iframeRef}
           src={url}
           className="w-full border-0"
-          style={{ minHeight: '600px' }}
+          style={{ minHeight: fullscreen ? '100%' : '600px', height: fullscreen ? '100%' : undefined }}
           title={title}
           allow="camera; microphone; geolocation"
         />

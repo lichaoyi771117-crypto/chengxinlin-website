@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { StreamlitEmbed } from '@/components/features/StreamlitEmbed'
 import { Card } from '@/components/ui/Card'
 import { TrialUsageWrapper } from '@/components/features/TrialUsageWrapper'
@@ -8,6 +9,8 @@ import { ArrowRight } from '@phosphor-icons/react'
 import { Button } from '@/components/ui/Button'
 
 export default function QiaoxiPage() {
+  const [fullscreen, setFullscreen] = useState(false)
+
   return (
     <TrialUsageWrapper product="qiaoxi" productName="乔曦">
       <div className="py-12">
@@ -20,11 +23,6 @@ export default function QiaoxiPage() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               国内首个把"能不能签"四个字写进答案的AI商业合同决策系统
             </p>
-            <Link href="/app/qiaoxi" className="inline-block mt-6">
-              <Button variant="copper" size="lg">
-                全屏使用 <ArrowRight size={18} className="ml-2" weight="bold" />
-              </Button>
-            </Link>
           </div>
 
           <div className="mb-12">
@@ -34,7 +32,8 @@ export default function QiaoxiPage() {
               url={process.env.NEXT_PUBLIC_QIAOXI_URL || 'http://localhost:8511'}
               icon="⚖️"
               healthPort="8511"
-              fullscreenHref="/app/qiaoxi"
+              fullscreen={fullscreen}
+              onToggleFullscreen={setFullscreen}
             />
           </div>
 
