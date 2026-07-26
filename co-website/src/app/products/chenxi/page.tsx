@@ -12,13 +12,13 @@ export default function ChenxiPage() {
   const [fullscreen, setFullscreen] = useState(false)
 
   return (
-    <TrialUsageWrapper product="chenxi" productName="陈曦">
+    <TrialUsageWrapper product="chenxi" productName="成章通">
       <div className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="text-6xl mb-4">📝</div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              陈曦 · AI公文工作台
+              成章通 · AI公文工作台
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               结构驱动 · 国标排版 · 四角色把关 — 体制内公文起草的精准工具
@@ -27,7 +27,7 @@ export default function ChenxiPage() {
 
           <div className="mb-12">
             <StreamlitEmbed
-              title="陈曦 · AI公文工作台"
+              title="成章通 · AI公文工作台"
               description="22种公文文种 · GB/T 9704国标排版 · AI智能起草"
               url={process.env.NEXT_PUBLIC_CHENXI_URL || 'http://localhost:8513'}
               icon="📝"
@@ -74,7 +74,7 @@ export default function ChenxiPage() {
               <div className="text-center">
                 <div className="text-4xl mb-3">3️⃣</div>
                 <h3 className="text-lg font-bold text-gray-900 mb-2">AI生成终稿</h3>
-                <p className="text-gray-600 text-sm">陈曦协议保证结构合规</p>
+                <p className="text-gray-600 text-sm">成章通协议保证结构合规</p>
               </div>
               <div className="text-center">
                 <div className="text-4xl mb-3">4️⃣</div>
@@ -86,7 +86,7 @@ export default function ChenxiPage() {
 
           <div className="bg-gray-50 rounded-2xl p-8 md:p-12 mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">授权方式</h2>
-            <p className="text-center text-gray-600 mb-6">购买一张授权码，陈曦不限次数使用</p>
+            <p className="text-center text-gray-600 mb-6">购买一张授权码，成章通不限次数使用</p>
             <div className="text-center">
               <Link href="/authorization/purchase" className="inline-block">
                 <Button variant="copper" size="lg">

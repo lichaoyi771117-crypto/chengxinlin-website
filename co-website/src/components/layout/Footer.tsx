@@ -2,10 +2,10 @@ import Link from 'next/link'
 
 const footerLinks = {
   products: [
-    { label: '乔曦 · AI合同审查', href: '/products/qiaoxi' },
+    { label: '契审通 · AI合同审查', href: '/products/qiaoxi' },
     { label: '峤远 · AI财报分析', href: '/products/qiaoyuan' },
     { label: '程晓融 · AI融资体检', href: '/products/chengxiaorong' },
-    { label: '陈曦 · 公文处理平台', href: '/products/chenxi' },
+    { label: '成章通 · 公文处理平台', href: '/products/chenxi' },
   ],
   services: [
     { label: '融资撮合服务', href: '/services/financing' },

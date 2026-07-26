@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '源产品与目标产品不能相同' }, { status: 400 })
     }
     if (from === 'chenxi' || to === 'chenxi') {
-      return NextResponse.json({ error: '陈曦不限次数，不可参与划转' }, { status: 400 })
+      return NextResponse.json({ error: '成章通不限次数，不可参与划转' }, { status: 400 })
     }
 
     const authCode = findAuthorizationCode((code || '').trim().toUpperCase())

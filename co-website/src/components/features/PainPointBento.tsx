@@ -10,7 +10,7 @@ const painPoints = [
     icon: FileText,
     title: '合同看不懂，不敢签',
     description: '98%的小微企业没有法务。一份合同审查律师费2000-5000元，等3-5天。签了才发现吃亏。',
-    solution: '乔曦：一分钟判断能不能签',
+    solution: '契审通：一分钟判断能不能签',
     href: '/products/qiaoxi',
     span: 'md:col-span-2 md:row-span-1',
   },

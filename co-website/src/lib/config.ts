@@ -7,7 +7,7 @@ export const AUTH_CODE_CONFIG = {
   PRICE_PROMO: Number(process.env.AUTH_CODE_PRICE_PROMO ?? 199),
   PROMO_ACTIVE: (process.env.AUTH_CODE_PROMO_ACTIVE ?? 'true') !== 'false',
 
-  // 每个限次产品默认可用次数（乔曦/峤远/程晓融）
+  // 每个限次产品默认可用次数（契审通/峤远/程晓融）
   DEFAULT_CAP: Number(process.env.AUTH_CODE_DEFAULT_CAP ?? 15),
 
   // 管理员免费额度（每个管理员）

@@ -12,7 +12,7 @@ const HARDCODED_ADMINS = [
   { account: 'yulei', nickname: '余磊', password: '123456' },
 ]
 
-// 管理员专属授权码（硬编码，永久绑定本人，子程序各 99999 次，陈曦不限）
+// 管理员专属授权码（硬编码，永久绑定本人，子程序各 99999 次，成章通不限）
 export const ADMIN_AUTH_CODES: Record<string, string> = {
   lichaoyi: 'LICHAOYI-ADMIN-UNLIMITED',
   yulei: 'YULEI-ADMIN-UNLIMITED',
@@ -211,7 +211,7 @@ function initializeHardcodedAdmins(): void {
   }
 }
 
-// 为每位硬编码管理员生成并绑定专属永久授权码（子程序各 99999 次，陈曦不限）
+// 为每位硬编码管理员生成并绑定专属永久授权码（子程序各 99999 次，成章通不限）
 function initializeHardcodedAdminCodes(): void {
   const db = _db
   if (!db) return
@@ -502,7 +502,7 @@ export function incrementAuthorizationUsage(codeId: number, product: 'qiaoxi' | 
   getDb().prepare(`UPDATE authorization_codes SET ${col} = ${col} + 1 WHERE id = ?`).run(codeId)
 }
 
-// 次数划转：从源产品上限减去 n，加到目标产品上限（仅限 3 个限次产品，不含陈曦）
+// 次数划转：从源产品上限减去 n，加到目标产品上限（仅限 3 个限次产品，不含成章通）
 export function transferCap(
   codeId: number,
   from: 'qiaoxi' | 'qiaoyuan' | 'cxr',

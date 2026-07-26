@@ -47,7 +47,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    // 陈曦不限次数
+    // 成章通不限次数
     if (product === 'chenxi' && authCode.chenxi_unlimited) {
       incrementAuthorizationUsage(authCode.id, 'chenxi')
       const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || ''

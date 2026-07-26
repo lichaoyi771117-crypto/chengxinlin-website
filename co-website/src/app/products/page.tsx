@@ -2,15 +2,15 @@ import { Card } from '@/components/ui/Card'
 import Link from 'next/link'
 
 const productImages: Record<string, string> = {
-  '/products/qiaoxi': '/images/product-qiaoxi.jpg',
+  '/products/qiaoxi': '/images/product-qishentong.jpg',
   '/products/qiaoyuan': '/images/product-qiaoyuan.jpg',
   '/products/chengxiaorong': '/images/product-chengxiaorong.jpg',
-  '/products/chenxi': '/images/product-chenxi.jpg',
+  '/products/chenxi': '/images/product-chengzhangtong.jpg',
 }
 
 const products = [
   {
-    name: '乔曦',
+    name: '契审通',
     icon: '⚖️',
     title: 'AI商业合同审查',
     description: '国内首个把"能不能签"四个字写进答案的AI商业合同决策系统',
@@ -52,7 +52,7 @@ const products = [
     href: '/products/chengxiaorong',
   },
   {
-    name: '陈曦',
+    name: '成章通',
     icon: '📝',
     title: 'AI公文工作台',
     description: '结构驱动 · 国标排版 · 22种公文文种 · GB/T 9704精准排版',

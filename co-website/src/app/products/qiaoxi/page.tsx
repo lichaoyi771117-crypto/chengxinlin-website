@@ -12,13 +12,13 @@ export default function QiaoxiPage() {
   const [fullscreen, setFullscreen] = useState(false)
 
   return (
-    <TrialUsageWrapper product="qiaoxi" productName="乔曦">
+    <TrialUsageWrapper product="qiaoxi" productName="契审通">
       <div className="py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="text-6xl mb-4">⚖️</div>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              乔曦 · AI商业合同审查
+              契审通 · AI商业合同审查
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               国内首个把"能不能签"四个字写进答案的AI商业合同决策系统
@@ -27,7 +27,7 @@ export default function QiaoxiPage() {
 
           <div className="mb-12">
             <StreamlitEmbed
-              title="乔曦 · AI商业合同审查"
+              title="契审通 · AI商业合同审查"
               description="上传合同，一分钟告诉你——能不能签"
               url={process.env.NEXT_PUBLIC_QIAOXI_URL || 'http://localhost:8511'}
               icon="⚖️"
@@ -60,7 +60,7 @@ export default function QiaoxiPage() {
 
           <div className="bg-gray-50 rounded-2xl p-8 md:p-12 mb-12">
             <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">授权方式</h2>
-            <p className="text-center text-gray-600 mb-6">购买一张授权码，畅享乔曦全部功能（各产品各 15 次）</p>
+            <p className="text-center text-gray-600 mb-6">购买一张授权码，畅享契审通全部功能（各产品各 15 次）</p>
             <div className="text-center">
               <Link href="/authorization/purchase" className="inline-block">
                 <Button variant="copper" size="lg">

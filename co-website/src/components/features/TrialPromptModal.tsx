@@ -9,7 +9,7 @@ interface TrialPromptModalProps {
 }
 
 const ICONS: Record<string, string> = { qiaoxi: '⚖️', qiaoyuan: '📊', cxr: '🏦', chenxi: '📝' }
-const NAMES: Record<string, string> = { qiaoxi: '乔曦·AI商业合同审查', qiaoyuan: '峤远·AI财务报表分析', cxr: '程晓融·AI融资体检', chenxi: '陈曦·公文处理平台' }
+const NAMES: Record<string, string> = { qiaoxi: '契审通·AI商业合同审查', qiaoyuan: '峤远·AI财务报表分析', cxr: '程晓融·AI融资体检', chenxi: '成章通·公文处理平台' }
 
 export function TrialPromptModal({ onClose }: TrialPromptModalProps) {
   const { setTrialCode, refreshStatus } = useTrial()
@@ -75,10 +75,10 @@ export function TrialPromptModal({ onClose }: TrialPromptModalProps) {
             <div className="bg-amber-50 rounded-xl p-4 mb-6 text-sm">
               <h3 className="font-medium text-amber-800 mb-2">试用码规则</h3>
               <ul className="space-y-1.5 text-amber-700">
-                <li>乔曦·AI商业合同审查 — <strong>3 次</strong></li>
+                <li>契审通·AI商业合同审查 — <strong>3 次</strong></li>
                 <li>峤远·AI财务报表分析 — <strong>3 次</strong></li>
                 <li>程晓融·AI融资体检 — <strong>3 次</strong></li>
-                <li>陈曦·公文处理平台 — <strong>10 次</strong></li>
+                <li>成章通·公文处理平台 — <strong>10 次</strong></li>
               </ul>
               <p className="text-xs text-amber-600 mt-2">
                 ⏱ 有效期 30 天，过期自动失效 · 每个账号限申请一次

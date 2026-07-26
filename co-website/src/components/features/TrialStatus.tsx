@@ -15,10 +15,10 @@ const productIcons: Record<Product, string> = {
 }
 
 const productNames: Record<Product, string> = {
-  qiaoxi: '乔曦',
+  qiaoxi: '契审通',
   qiaoyuan: '峤远',
   cxr: '程晓融',
-  chenxi: '陈曦',
+  chenxi: '成章通',
 }
 
 export function TrialStatusBar({ product, productName }: TrialStatusBarProps) {
@@ -26,7 +26,7 @@ export function TrialStatusBar({ product, productName }: TrialStatusBarProps) {
 
   if (!isVerified || !remaining) return null
 
-  // 陈曦不限次数
+  // 成章通不限次数
   if (product === 'chenxi') {
     return (
       <div className="rounded p-3 mb-4 bg-paper border border-copper/20">

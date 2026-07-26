@@ -5,7 +5,7 @@ import { getCurrentUser } from '@/lib/auth'
 
 export type Product = 'qiaoxi' | 'qiaoyuan' | 'cxr' | 'chenxi'
 
-// 陈曦不限次数时的剩余量哨兵值
+// 成章通不限次数时的剩余量哨兵值
 export const UNLIMITED = 999999
 
 interface TrialRemaining {

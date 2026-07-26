@@ -97,7 +97,7 @@ export default function PurchasePage() {
       <div className="max-w-2xl mx-auto px-4">
         <div className="text-center mb-10">
           <h1 className="text-3xl font-bold text-navy">购买授权码</h1>
-          <p className="text-warm-500 mt-2">一张授权码畅享乔曦、峤远、程晓融（各 15 次）与陈曦（不限次数），有效期一年</p>
+          <p className="text-warm-500 mt-2">一张授权码畅享契审通、峤远、程晓融（各 15 次）与成章通（不限次数），有效期一年</p>
         </div>
 
         {step === 'loading' && <p className="text-center text-gray-500">加载中...</p>}
@@ -138,10 +138,10 @@ export default function PurchasePage() {
               <p className="text-center text-rose-500 text-sm mb-6">🎉 限时特惠，全年最低价</p>
             )}
             <ul className="space-y-3 mb-8 text-sm text-gray-600">
-              <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 乔曦·AI 商业合同审查 15 次</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 契审通·AI 商业合同审查 15 次</li>
               <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 峤远·AI 财务报表分析 15 次</li>
               <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 程晓融·AI 融资体检 15 次</li>
-              <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 陈曦·公文处理平台 不限次数</li>
+              <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 成章通·公文处理平台 不限次数</li>
               <li className="flex items-center gap-2"><span className="text-green-500">✓</span> 有效期一年，可自由划转次数</li>
             </ul>
             {error && <p className="text-red-500 text-sm text-center mb-4">{error}</p>}

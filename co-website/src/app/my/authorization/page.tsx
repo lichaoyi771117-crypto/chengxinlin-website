@@ -8,7 +8,7 @@ import { useTrial, UNLIMITED, type Product } from '@/lib/trial-context'
 
 type LimitProduct = 'qiaoxi' | 'qiaoyuan' | 'cxr'
 const LIMIT_PRODUCTS: LimitProduct[] = ['qiaoxi', 'qiaoyuan', 'cxr']
-const LABELS: Record<Product, string> = { qiaoxi: '乔曦', qiaoyuan: '峤远', cxr: '程晓融', chenxi: '陈曦' }
+const LABELS: Record<Product, string> = { qiaoxi: '契审通', qiaoyuan: '峤远', cxr: '程晓融', chenxi: '成章通' }
 const ICONS: Record<Product, string> = { qiaoxi: '⚖️', qiaoyuan: '📊', cxr: '🏦', chenxi: '📝' }
 
 export default function MyAuthorizationPage() {
@@ -103,7 +103,7 @@ export default function MyAuthorizationPage() {
         <div className="bg-white rounded-2xl shadow p-8">
           <h2 className="text-lg font-bold text-gray-900 mb-1">次数划转</h2>
           <p className="text-sm text-gray-500 mb-6">
-            当某产品次数用完、而其它产品还有剩余时，可将剩余次数划转到需要使用的产品（陈曦不限次数，不参与划转）。
+            当某产品次数用完、而其它产品还有剩余时，可将剩余次数划转到需要使用的产品（成章通不限次数，不参与划转）。
           </p>
 
           <div className="grid md:grid-cols-3 gap-4 items-end">

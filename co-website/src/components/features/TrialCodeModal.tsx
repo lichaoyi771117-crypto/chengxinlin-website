@@ -146,7 +146,7 @@ export function TrialCodeModal({ isOpen, onClose, onSuccess }: TrialCodeModalPro
                   {(['qiaoxi', 'qiaoyuan', 'cxr', 'chenxi'] as const).map(p => (
                     <div key={p} className="text-center">
                       <div className="text-lg mb-1">{p === 'qiaoxi' ? '⚖️' : p === 'qiaoyuan' ? '📊' : p === 'cxr' ? '🏦' : '📝'}</div>
-                      <div className="text-xs text-navy">{p === 'qiaoxi' ? '乔曦' : p === 'qiaoyuan' ? '峤远' : p === 'cxr' ? '程晓融' : '陈曦'}</div>
+                      <div className="text-xs text-navy">{p === 'qiaoxi' ? '契审通' : p === 'qiaoyuan' ? '峤远' : p === 'cxr' ? '程晓融' : '成章通'}</div>
                       <div className="text-lg font-bold text-copper">{remaining[p] >= 999999 ? '不限' : `${remaining[p]}次`}</div>
                     </div>
                   ))}

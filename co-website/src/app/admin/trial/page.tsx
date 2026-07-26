@@ -427,7 +427,7 @@ export default function AdminTrialPage() {
                     <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">到期时间</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">来源</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">绑定用户</th>
-                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">乔曦</th>
+                    <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">契审通</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">峤远</th>
                     <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase">程晓融</th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">创建者</th>
@@ -711,7 +711,7 @@ export default function AdminTrialPage() {
                   onChange={e => setCreateMaxUses(parseInt(e.target.value) || 10)}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                 />
-                <p className="text-xs text-gray-500 mt-1">乔曦/峤远/程晓融各{createMaxUses}次，陈曦不限次数</p>
+                <p className="text-xs text-gray-500 mt-1">契审通/峤远/程晓融各{createMaxUses}次，成章通不限次数</p>
               </div>
 
               <div>

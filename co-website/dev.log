@@ -1,0 +1,168 @@
+
+> co-website@0.1.0 dev
+> next dev -p 3006
+
+▲ Next.js 16.2.9 (Turbopack)
+- Local:         http://localhost:3006
+- Network:       http://10.162.40.88:3006
+- Environments: .env.local
+✓ Ready in 1080ms
+[startup] qiaoxi already running on port 8511
+[startup] qiaoyuan already running on port 8512
+[startup] chenxi already running on port 8513
+[startup] cxr launched on port 8090
+
+ GET / 200 in 458ms (next.js: 189ms, application-code: 269ms)
+ GET /app/chenxi 200 in 88ms (next.js: 30ms, application-code: 59ms)
+ GET /app/chenxi 200 in 64ms (next.js: 13ms, application-code: 51ms)
+ GET /app/chenxi 200 in 49ms (next.js: 4ms, application-code: 46ms)
+ GET /app/chenxi 200 in 52ms (next.js: 4ms, application-code: 47ms)
+ GET /app/chenxi 200 in 49ms (next.js: 5ms, application-code: 44ms)
+ GET /app/chenxi 200 in 52ms (next.js: 5ms, application-code: 47ms)
+ GET / 200 in 72ms (next.js: 4ms, application-code: 68ms)
+ GET / 200 in 134ms (next.js: 12ms, application-code: 122ms)
+ GET /api/services/health 401 in 132ms (next.js: 105ms, application-code: 27ms)
+Login error: Error: The module '\\?\D:\Ai RAG\Co.Website\co-website\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 127. This version of Node.js requires
+NODE_MODULE_VERSION 137. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+    at getDb (src\lib\db.ts:32:9)
+    at getPasswordHash (src\lib\db.ts:270:15)
+    at POST (src\app\api\auth\login\route.ts:20:41)
+  30 |   }
+  31 |
+> 32 |   _db = new Database(DB_PATH)
+     |         ^
+  33 |   _db.pragma('journal_mode = WAL')
+  34 |
+  35 |   _db.exec(` {
+  code: 'ERR_DLOPEN_FAILED'
+}
+ POST /api/auth/login 500 in 251ms (next.js: 45ms, application-code: 206ms)
+Login error: Error: The module '\\?\D:\Ai RAG\Co.Website\co-website\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 127. This version of Node.js requires
+NODE_MODULE_VERSION 137. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+    at getDb (src\lib\db.ts:32:9)
+    at getPasswordHash (src\lib\db.ts:270:15)
+    at POST (src\app\api\auth\login\route.ts:20:41)
+  30 |   }
+  31 |
+> 32 |   _db = new Database(DB_PATH)
+     |         ^
+  33 |   _db.pragma('journal_mode = WAL')
+  34 |
+  35 |   _db.exec(` {
+  code: 'ERR_DLOPEN_FAILED'
+}
+ POST /api/auth/login 500 in 76ms (next.js: 4ms, application-code: 72ms)
+Login error: Error: The module '\\?\D:\Ai RAG\Co.Website\co-website\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 127. This version of Node.js requires
+NODE_MODULE_VERSION 137. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+    at getDb (src\lib\db.ts:32:9)
+    at getPasswordHash (src\lib\db.ts:270:15)
+    at POST (src\app\api\auth\login\route.ts:20:41)
+  30 |   }
+  31 |
+> 32 |   _db = new Database(DB_PATH)
+     |         ^
+  33 |   _db.pragma('journal_mode = WAL')
+  34 |
+  35 |   _db.exec(` {
+  code: 'ERR_DLOPEN_FAILED'
+}
+ POST /api/auth/login 500 in 84ms (next.js: 4ms, application-code: 80ms)
+Login error: Error: The module '\\?\D:\Ai RAG\Co.Website\co-website\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 127. This version of Node.js requires
+NODE_MODULE_VERSION 137. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+    at getDb (src\lib\db.ts:32:9)
+    at getPasswordHash (src\lib\db.ts:270:15)
+    at POST (src\app\api\auth\login\route.ts:20:41)
+  30 |   }
+  31 |
+> 32 |   _db = new Database(DB_PATH)
+     |         ^
+  33 |   _db.pragma('journal_mode = WAL')
+  34 |
+  35 |   _db.exec(` {
+  code: 'ERR_DLOPEN_FAILED'
+}
+ POST /api/auth/login 500 in 108ms (next.js: 4ms, application-code: 104ms)
+Login error: Error: The module '\\?\D:\Ai RAG\Co.Website\co-website\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 127. This version of Node.js requires
+NODE_MODULE_VERSION 137. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+    at getDb (src\lib\db.ts:32:9)
+    at getPasswordHash (src\lib\db.ts:270:15)
+    at POST (src\app\api\auth\login\route.ts:20:41)
+  30 |   }
+  31 |
+> 32 |   _db = new Database(DB_PATH)
+     |         ^
+  33 |   _db.pragma('journal_mode = WAL')
+  34 |
+  35 |   _db.exec(` {
+  code: 'ERR_DLOPEN_FAILED'
+}
+ POST /api/auth/login 500 in 76ms (next.js: 3ms, application-code: 73ms)
+Login error: Error: The module '\\?\D:\Ai RAG\Co.Website\co-website\node_modules\better-sqlite3\build\Release\better_sqlite3.node'
+was compiled against a different Node.js version using
+NODE_MODULE_VERSION 127. This version of Node.js requires
+NODE_MODULE_VERSION 137. Please try re-compiling or re-installing
+the module (for instance, using `npm rebuild` or `npm install`).
+    at getDb (src\lib\db.ts:32:9)
+    at getPasswordHash (src\lib\db.ts:270:15)
+    at POST (src\app\api\auth\login\route.ts:20:41)
+  30 |   }
+  31 |
+> 32 |   _db = new Database(DB_PATH)
+     |         ^
+  33 |   _db.pragma('journal_mode = WAL')
+  34 |
+  35 |   _db.exec(` {
+  code: 'ERR_DLOPEN_FAILED'
+}
+ POST /api/auth/login 500 in 57ms (next.js: 2ms, application-code: 55ms)
+ POST /api/auth/login 400 in 99ms (next.js: 3ms, application-code: 96ms)
+ POST /api/auth/login 200 in 80ms (next.js: 3ms, application-code: 77ms)
+ POST /api/authcode/status 200 in 46ms (next.js: 37ms, application-code: 9ms)
+ POST /api/authcode/status 200 in 10ms (next.js: 4ms, application-code: 6ms)
+ GET /products/chenxi 200 in 80ms (next.js: 52ms, application-code: 28ms)
+ GET /api/services/health 200 in 22ms (next.js: 5ms, application-code: 17ms)
+ GET /api/services/health 200 in 15ms (next.js: 4ms, application-code: 10ms)
+ GET /app/chenxi 200 in 28ms (next.js: 6ms, application-code: 23ms)
+ GET /api/services/health 200 in 20ms (next.js: 4ms, application-code: 16ms)
+ GET /api/services/health 200 in 15ms (next.js: 3ms, application-code: 12ms)
+ GET /api/services/health 200 in 15ms (next.js: 4ms, application-code: 11ms)
+ GET / 200 in 22ms (next.js: 4ms, application-code: 18ms)
+ GET /products 200 in 86ms (next.js: 41ms, application-code: 45ms)
+ GET /products/chengxiaorong 200 in 79ms (next.js: 52ms, application-code: 27ms)
+ GET /api/services/health 200 in 17ms (next.js: 5ms, application-code: 12ms)
+ GET /api/services/health 200 in 12ms (next.js: 3ms, application-code: 9ms)
+ GET /products 200 in 55ms (next.js: 7ms, application-code: 48ms)
+ GET /products/qiaoyuan 200 in 59ms (next.js: 38ms, application-code: 21ms)
+ GET /api/services/health 200 in 13ms (next.js: 3ms, application-code: 10ms)
+ GET /api/services/health 200 in 8ms (next.js: 2ms, application-code: 6ms)
+ GET /products 200 in 50ms (next.js: 6ms, application-code: 44ms)
+ GET /products/qiaoxi 200 in 71ms (next.js: 44ms, application-code: 27ms)
+ GET /api/services/health 200 in 17ms (next.js: 4ms, application-code: 13ms)
+ GET /api/services/health 200 in 13ms (next.js: 3ms, application-code: 10ms)
+ GET /products 200 in 29ms (next.js: 6ms, application-code: 23ms)
+ GET /products/chengxiaorong 200 in 30ms (next.js: 5ms, application-code: 26ms)
+ GET /api/services/health 200 in 14ms (next.js: 4ms, application-code: 10ms)
+ GET /api/services/health 200 in 14ms (next.js: 3ms, application-code: 11ms)
+ GET /app/chengxiaorong 200 in 98ms (next.js: 40ms, application-code: 57ms)
+ GET /app/chengxiaorong 200 in 48ms (next.js: 4ms, application-code: 44ms)
+ GET /app/chengxiaorong 200 in 48ms (next.js: 4ms, application-code: 44ms)
+ GET /app/chengxiaorong 200 in 55ms (next.js: 5ms, application-code: 50ms)
+ GET /api/services/health 401 in 10ms (next.js: 3ms, application-code: 7ms)
+ GET /app/chengxiaorong 200 in 48ms (next.js: 5ms, application-code: 42ms)
+ GET /app/chengxiaorong 200 in 48ms (next.js: 3ms, application-code: 45ms)
+ GET /app/chengxiaorong 200 in 51ms (next.js: 4ms, application-code: 47ms)

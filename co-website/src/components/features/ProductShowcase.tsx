@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/Button'
 
 const products = [
   {
-    name: '乔曦',
+    name: '契审通',
     icon: Scales,
     title: 'AI商业合同审查',
     description: '上传合同，系统直接告诉你签/改/拖/退。不是列风险清单让你自己判断。',
